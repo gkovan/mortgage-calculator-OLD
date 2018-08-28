@@ -1,0 +1,10 @@
+---
+applications:
+- instances: 1
+  timeout: 180
+  name: MortgageCalculator
+  buildpack: java_buildpack
+  path: ./target/MortgageCalculator-1.0-SNAPSHOT.jar
+  memory: 256M
+  domain: mybluemix.net
+  host: spring-boot-mortgage-calculator

@@ -1,0 +1,6 @@
+{
+    "principal": "100000",
+    "interestRate": "5.0",
+    "years": "30",
+    "monthlyPayment": "500.00"
+}
