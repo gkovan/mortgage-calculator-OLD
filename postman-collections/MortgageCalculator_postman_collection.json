@@ -1,0 +1,89 @@
+{
+	"variables": [],
+	"info": {
+		"name": "MortgageCalculator",
+		"_postman_id": "62c63a62-5e64-1dd6-3002-92378df7b887",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "hellomortgage",
+			"request": {
+				"url": "localhost:8080/hellomortgage",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "GET calculate",
+			"request": {
+				"url": {
+					"raw": "localhost:8080/calculate?principal=100000&interestrate=5.0&term=30",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"calculate"
+					],
+					"query": [
+						{
+							"key": "principal",
+							"value": "100000",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "interestrate",
+							"value": "5.0",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "term",
+							"value": "30",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "POST calculate",
+			"request": {
+				"url": "localhost:8080/calculate",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"principal\": \"100000\",\n    \"interestRate\": \"5.0\",\n    \"term\": \"30\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}
