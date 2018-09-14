@@ -12,7 +12,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gk.mortgage.calculator.utils.TestUtils;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -45,15 +44,11 @@ public class MortgageCalculatorApiTest {
     @Test
     public void invokeMortgageCalculatorShouldBeSuccess() throws Exception {
 
-        ObjectMapper mapper = new ObjectMapper();
-        String requestBody = mapper.writeValueAsString(TestUtils.readFile("src/test/resources/__files/mortgage-calculator-request.json"));
-System.out.println(requestBody);
-String requestBody2 = "{\"principal\": \"100000\",    \"interestRate\": \"5.0\",    \"term\": \"30\"}";
-       // setStubForUpdateSSRs(TestUtils.FILES_MANAGE_SSR_RESPONSE_BODY_JSON);
+        String requestBody = TestUtils.loadSourceFile("__files/mortgage-calculator-request.json");
         
         String url = "/calculate";
 
-        mockMvc.perform(post(url).headers(httpHeaders).content(requestBody2).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(post(url).headers(httpHeaders).content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))                
                 .andExpect(jsonPath("$.principal", Matchers.equalTo(100000.0)))

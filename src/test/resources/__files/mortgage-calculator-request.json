@@ -1,5 +1,5 @@
 {
     "principal": "100000",
     "interestRate": "5.0",
-    "years": "30"
+    "term": "30"
 }

@@ -16,7 +16,7 @@ public class MortgageTaskTest {
 	@Test
 	public void testTaskCalculatesCorrectMonthlyMortgagePayment() {
 		
-		// given request object with principal $100,00, int rate of 5.0% and years is 30
+		// given request object with principal $100,00, int rate of 5.0% and term is 30 years
 		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
 		request.setPrincipal(100000.0);
 		request.setInterestRate(5.0);
