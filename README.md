@@ -1,3 +1,4 @@
+
 ## Microservice
 IBM Cloud Microservice Starter for Spring
 
@@ -50,6 +51,10 @@ The application exposes the following endpoints:
 
 The ports are set in the pom.xml file and exposed to the CLI in the cli-config.yml file.
 
+### Smoke tests
+Smoke tests are implemented using a postman collection.
+To run the smoke test run the command:
+   newman run ./postman-collections/MortgageCalculator_postman_collection.json
 
 ### Notices
 
