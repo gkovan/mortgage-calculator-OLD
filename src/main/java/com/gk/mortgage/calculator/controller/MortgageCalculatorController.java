@@ -30,10 +30,19 @@ public class MortgageCalculatorController {
 	
 	
 	@GetMapping("/calculate")
-	public String calculateMonthlyPayment(@RequestParam(value="principal") String principal, 
+	public MortgageCalculatorResponse calculateMonthlyPayment(@RequestParam(value="principal") String principal, 
 										  @RequestParam(value="interestrate") String interestRate,
 										  @RequestParam(value="term") String term) {
-		return "100";
+		
+		Double p = Double.parseDouble(principal);
+		Double ir = Double.parseDouble(interestRate);
+		Integer t = Integer.parseInt(term);		
+		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
+		request.setPrincipal(p);
+		request.setInterestRate(ir);
+		request.setTerm(t);
+		
+		return mortgageTask.calculate(request);
 	}
 	
 	@PostMapping("/calculate")

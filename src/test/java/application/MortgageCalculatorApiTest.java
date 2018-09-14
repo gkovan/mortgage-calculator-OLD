@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import com.gk.mortgage.calculator.utils.TestUtils;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -42,7 +43,7 @@ public class MortgageCalculatorApiTest {
     }
     
     @Test
-    public void invokeMortgageCalculatorShouldBeSuccess() throws Exception {
+    public void invokeMortgageCalculatorPostRequestShouldBeSuccess() throws Exception {
 
         String requestBody = TestUtils.loadSourceFile("__files/mortgage-calculator-request.json");
         
@@ -50,6 +51,20 @@ public class MortgageCalculatorApiTest {
 
         mockMvc.perform(post(url).headers(httpHeaders).content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))                
+                .andExpect(jsonPath("$.principal", Matchers.equalTo(100000.0)))
+                .andExpect(jsonPath("$.interestRate", Matchers.equalTo(5.0)))
+        		.andExpect(jsonPath("$.term", Matchers.equalTo(30)))
+        		.andExpect(jsonPath("$.monthlyPayment", Matchers.equalTo(536.82)));
+    }
+    
+    @Test
+    public void invokeMortgageCalculatorGetRequestShouldBeSuccess() throws Exception {
+        
+        String url = "/calculate?principal=100000&interestrate=5.0&term=30";
+
+        mockMvc.perform(get(url))
+        		.andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))                
                 .andExpect(jsonPath("$.principal", Matchers.equalTo(100000.0)))
                 .andExpect(jsonPath("$.interestRate", Matchers.equalTo(5.0)))
