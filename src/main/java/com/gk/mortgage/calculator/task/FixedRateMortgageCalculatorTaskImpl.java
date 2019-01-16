@@ -11,11 +11,12 @@ public class FixedRateMortgageCalculatorTaskImpl implements MortgageCalculatorTa
 		// Term in months
 		int termInMonths = term * 12;
 
-		double payment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termInMonths));
+		// calculate monthly payment
+		double monthlyPayment = (principal * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -termInMonths));
 		
 		// round to two decimals
-		payment = (double) Math.round(payment * 100) / 100;
-		return payment;
+		monthlyPayment = (double) Math.round(monthlyPayment * 100) / 100;
+		return monthlyPayment;
 	}
 
 }

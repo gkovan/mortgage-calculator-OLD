@@ -27,7 +27,7 @@ public class MortgageCalculatorExceptionHandler extends ResponseEntityExceptionH
        return handleExceptionInternal(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
     } 
     
-    // Respond with HTTP 400 Invalid input
+    // Respond with HTTP 400 Bad request invalid input
     
     @ExceptionHandler({ BadRequestInputException.class })
     protected ResponseEntity<Object> handleBadRequestInputException(RuntimeException e, WebRequest request) {       

@@ -57,6 +57,23 @@ public class MortgageCalculatorControllerTest {
 	}
 	
 	@SuppressWarnings("unchecked")
+	@Test(expected = BadRequestInputException.class)
+	public void controllerShouldThrowBadRequestInputException() {
+
+		doNothing().when(validateInputTask).validate(any());
+		when(mortgageProcessorTask.process(any())).thenThrow(BadRequestInputException.class);
+		
+		// given mortgage request
+		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
+		// set any values for the request fields
+		request.setInterestRate(5.0);
+		request.setTerm(30);
+		
+		// when controller is invoked
+		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);
+	}
+	
+	@SuppressWarnings("unchecked")
 	@Test(expected = RestClientException.class)
 	public void controllerShouldThrowRestClientException() {
 
@@ -73,22 +90,4 @@ public class MortgageCalculatorControllerTest {
 		// when controller is invoked
 		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);
 	}
-	
-	@SuppressWarnings("unchecked")
-	@Test(expected = BadRequestInputException.class)
-	public void controllerShouldThrowBadRequestInputException() {
-
-		doNothing().when(validateInputTask).validate(any());
-		when(mortgageProcessorTask.process(any())).thenThrow(BadRequestInputException.class);
-		
-		// given mortgage request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		// set any values for the request fields
-		request.setInterestRate(5.0);
-		request.setTerm(30);
-		
-		// when controller is invoked
-		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);
-	}
-
 }
