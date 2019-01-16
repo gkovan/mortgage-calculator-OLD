@@ -1,9 +1,7 @@
 package application;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +12,9 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest;
+import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 
 /* 
  * Test the full stack with a running server.
@@ -29,31 +30,21 @@ public class MortgageCalculatorApiServerTest {
 
     @LocalServerPort
     private int port;
-
-	
-	@Test
-	public void testMortgageCalculatorEndpointShouldReturnSuccess200() {
-		// given a server with endpoint /mortgage 
 		
-		// when we invoke /mortgage endpoint
-        String endpoint = "http://localhost:" + port + "/hellomortgage";
-        ResponseEntity<String> re = server.getForEntity(endpoint, String.class);
-
-        // then
-        assertEquals(200, re.getStatusCode().value());
-        assertEquals("mortgage", re.getBody());
-	}
-	
 	@Test
 	public void mortgageCalculatorShouldReturn200() {
 		// given a server with endpoint /calculate
-		String principal = "10000";
-		String interestRate = "5.0";
-		String term = "30";
+
+		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
+		request.setInterestRate(5.5);
+		request.setPrincipal(100000.0);
+		request.setTerm(30);
+		request.setType("fixed");
+		
 		
 		// when we invoke /calculate endpoint
-		String endpoint = "http://localhost:" + port + "/calculate"+"?principal=" + principal + "&interestrate=" + interestRate + "&term=" + term;
-		ResponseEntity<String> re = server.getForEntity(endpoint, String.class);
+		String endpoint = "http://localhost:" + port + "/calculate";
+		ResponseEntity<MortgageCalculatorResponse> re = server.postForEntity(endpoint, request, MortgageCalculatorResponse.class);
         System.out.println(re.getBody());
         
 		// then

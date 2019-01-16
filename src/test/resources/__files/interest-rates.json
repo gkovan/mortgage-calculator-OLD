@@ -1,0 +1,12 @@
+{
+	"interestRates": [
+		{
+			"type": "30",
+			"rate": 5
+		},
+		{
+			"type": "15",
+			"rate": 3.5
+		}
+	]
+}

@@ -8,4 +8,5 @@ public class MortgageCalculatorRequest {
 	Double principal;
 	Double interestRate;
 	Integer term;
+	String type;
 }

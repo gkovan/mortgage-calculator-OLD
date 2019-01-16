@@ -1,2 +1,6 @@
 server:
   port: "${port:8110}"
+  
+environment:
+  interestrate:
+    uri: "http://localhost:8111/interest-rates"
