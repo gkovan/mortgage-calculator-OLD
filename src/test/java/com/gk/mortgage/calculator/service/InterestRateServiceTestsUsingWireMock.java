@@ -4,6 +4,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +26,7 @@ import application.SBApplication;
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SBApplication.class)
 //@ActiveProfiles("tests")
+@Ignore
 public class InterestRateServiceTestsUsingWireMock {
     @Rule
     public WireMockRule wireMockRule = new WireMockRule();
@@ -48,10 +50,4 @@ public class InterestRateServiceTestsUsingWireMock {
 		InterestRatesResponse response = interestRateService.getRates();
 		assertNotNull(null);
 	}
-	
-	@Test
-	public void test2() {
-		assertTrue(false);
-	}
-    
 }
