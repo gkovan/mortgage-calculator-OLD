@@ -16,17 +16,7 @@ import com.gk.mortgage.calculator.logging.MortgageCalculatorErrorCodes;
 
 @ControllerAdvice
 public class MortgageCalculatorExceptionHandler extends ResponseEntityExceptionHandler {
-	
-	// Respond with HTTP 500 Internal server error
-	
-    @ExceptionHandler({ RestClientException.class })
-    protected ResponseEntity<Object> handleRestClientException(RuntimeException e, WebRequest request) {       
-       ErrorResponse error = new ErrorResponse(MortgageCalculatorErrorCodes.APPERR0001.name(), MortgageCalculatorErrorCodes.APPERR0001.value());
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-       return handleExceptionInternal(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    } 
-    
+		
     // Respond with HTTP 400 Bad request invalid input
     
     @ExceptionHandler({ BadRequestInputException.class })
@@ -35,5 +25,15 @@ public class MortgageCalculatorExceptionHandler extends ResponseEntityExceptionH
        HttpHeaders headers = new HttpHeaders();
        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
        return handleExceptionInternal(e, error, headers, HttpStatus.BAD_REQUEST, request);
+    } 
+    
+	// Respond with HTTP 500 Internal server error
+	
+    @ExceptionHandler({ RestClientException.class })
+    protected ResponseEntity<Object> handleRestClientException(RuntimeException e, WebRequest request) {       
+       ErrorResponse error = new ErrorResponse(MortgageCalculatorErrorCodes.APPERR0001.name(), MortgageCalculatorErrorCodes.APPERR0001.value());
+       HttpHeaders headers = new HttpHeaders();
+       headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+       return handleExceptionInternal(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
     } 
 }
