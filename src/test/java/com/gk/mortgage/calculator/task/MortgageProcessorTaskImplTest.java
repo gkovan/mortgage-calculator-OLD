@@ -31,9 +31,12 @@ import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 import com.gk.mortgage.calculator.service.InterestRateService;
 import com.gk.mortgage.calculator.service.InterestRateServiceImpl;
 
+import application.SBApplication;
+
 @RunWith(SpringRunner.class)
+@SpringBootTest(classes = SBApplication.class)
 @DirtiesContext(classMode = ClassMode.AFTER_CLASS)
-@Ignore
+//@Ignore
 public class MortgageProcessorTaskImplTest {
 	
 //	@Mock
@@ -47,9 +50,8 @@ public class MortgageProcessorTaskImplTest {
 	@Qualifier("fixed")
 	MortgageCalculatorTask mortgageCalculatorTask;
 	
-//	@Autowired
-//	@Qualifier("for-test")
-	MortgageProcessorTaskImpl mortgageProcessorTask = new MortgageProcessorTaskImpl();
+	@Autowired
+	MortgageProcessorTaskImpl mortgageProcessorTask;
 	
 	@Test
 	public void whenInvokingMortgageProcessorShouldReturnResponseWithMonthlyPaymentValue() {
@@ -59,7 +61,7 @@ public class MortgageProcessorTaskImplTest {
 		request.setInterestRate(5.5);
 		request.setPrincipal(100000.0);
 		request.setTerm(30);
-		request.setType("fixed-test");
+		request.setType("fixed");
 
 		// mock the response of the dependency
 		when(mortgageCalculatorTask.calculateMonthlyPayment(100000, 5.5, 30)).thenReturn(100.0);
@@ -71,24 +73,4 @@ public class MortgageProcessorTaskImplTest {
 		assertNotNull(response.getMonthlyPayment());
 		assertEquals(new Double(100.0), new Double(response.getMonthlyPayment()));
 	}
-	
-	
-//    @Configuration
-//    @Import(MortgageProcessorTaskImpl.class) // A @Component injected with ExampleService
-//    private static class Config {
-//    	@Bean(name = "fixed-test")
-//    	public MortgageCalculatorTask fixedRateMortgageCalculator() {		
-//    		return new FixedRateMortgageCalculatorTaskImpl();
-//    	}
-//    	
-//    	@Bean("interest-test")
-//    	public MortgageCalculatorTask getMortgageCalculator() {		
-//    		return new InterestOnlyMortgageCalculatorTaskImpl();
-//    	}
-//    	
-//    	@Bean("for-test")
-//    	public MortgageProcessorTask getMortgageProcessorTask() {
-//    		return new MortgageProcessorTaskImpl();
-//    	}
-//    }
 }
