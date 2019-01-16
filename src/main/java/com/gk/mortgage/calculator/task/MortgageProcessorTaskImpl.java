@@ -1,11 +1,15 @@
 package com.gk.mortgage.calculator.task;
 
+
+import java.util.List;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
+import com.gk.mortgage.calculator.domain.AmortizationSchedule;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 import com.gk.mortgage.calculator.domain.interest.rate.InterestRatesResponse;
@@ -35,9 +39,9 @@ public class MortgageProcessorTaskImpl implements MortgageProcessorTask, Applica
 		
 		// invoke the bean to calculate the monthly payment
 		double monthlyPayment = mortgageCalculatorTask.calculateMonthlyPayment(request.getPrincipal().doubleValue(), request.getInterestRate().doubleValue(), request.getTerm().intValue());
-		
+		List<AmortizationSchedule> amortizationSchedule = mortgageCalculatorTask.generateAmortizationSchedule(request.getPrincipal().doubleValue(), request.getInterestRate().doubleValue(), request.getTerm().intValue());
 		// return the response object
-		return buildResponseObject(request, monthlyPayment);
+		return buildResponseObject(request, monthlyPayment, amortizationSchedule);
 	}
 	
     @Override

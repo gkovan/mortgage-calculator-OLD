@@ -1,5 +1,10 @@
 package com.gk.mortgage.calculator.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.gk.mortgage.calculator.domain.AmortizationSchedule;
+
 public class InterestOnlyMortgageCalculatorTaskImpl implements MortgageCalculatorTask {
 
 	@Override
@@ -14,4 +19,8 @@ public class InterestOnlyMortgageCalculatorTaskImpl implements MortgageCalculato
 		return monthlyPayment;
 	}
 
+	@Override
+	public  List<AmortizationSchedule> generateAmortizationSchedule(double principal, double annualInterestRate,int numYears) {
+	   return new ArrayList<AmortizationSchedule>();
+	}
 }
