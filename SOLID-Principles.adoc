@@ -1,17 +1,42 @@
 == Introduction
 
-SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible. For IBM Cloud Garage developers these are all critical aspects of good software design especially when doing TDD.
-
-Besides helping write good code, understanding SOLID principles will help you when doing code reviews as it provides a good framework for making suggestions to improve code. In this talk, we will discuss the five principles and we will show real code examples to demonstrate its value.
+SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible.
+These are all critical aspects of good software design especially when doing Test Driven Development (TDD).
+Besides helping write good code, understanding SOLID principles will help you when doing code reviews as it provides a good framework for making
+suggestions to improve the code. In this post, we will discuss the five principles and we will show real code examples to demonstrate its value.
 
 == SOLID Principles Explained
 
+The five principles are
+.Ordered
+. Simple Principle
+. Open / Closed Principle
+. Liskov Substitution Principle
+. Interface Segregation Principle
+. Dependency Injection Principle
+
+We will discuss the SOLID principles and how they were used in the context of the sample mortgage calculator application that was developed.
+The mortgage calculator is an api application that calculates monthly mortgage payments for various type of mortgages such as
+fixed rate (30 year, 15 year etc) or interest only mortgages.
+
+
+=== S - Simple Principle
+
 text
 
-=== S - Simple
+=== Open / Closed Principle
 
 text
 
+=== Liskov Substitution Principle
+
+text
+
+=== Interface Segregation Principle
+
+text
+
+=== Dependency Injection Principle
 
 == Conclusion
 
