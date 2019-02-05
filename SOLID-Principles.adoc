@@ -1,0 +1,18 @@
+== Introduction
+
+SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible. For IBM Cloud Garage developers these are all critical aspects of good software design especially when doing TDD.
+
+Besides helping write good code, understanding SOLID principles will help you when doing code reviews as it provides a good framework for making suggestions to improve code. In this talk, we will discuss the five principles and we will show real code examples to demonstrate its value.
+
+== SOLID Principles Explained
+
+text
+
+=== S - Simple
+
+text
+
+
+== Conclusion
+
+text
