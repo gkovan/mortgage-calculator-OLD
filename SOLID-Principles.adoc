@@ -7,8 +7,9 @@ suggestions to improve the code. In this post, we will discuss the five principl
 
 == SOLID Principles Explained
 
+
 The five principles are
-.Ordered
+
 . Simple Principle
 . Open / Closed Principle
 . Liskov Substitution Principle
@@ -22,11 +23,24 @@ fixed rate (30 year, 15 year etc) or interest only mortgages.
 
 === S - Simple Principle
 
-text
+This principle states
+
+* A class should have only a single responsibility.
+
+If you look at the structure of the code in figure 1, each class only has a single responsibility.
+This makes each class very easy to test.  From a TDD perspective, it makes it very easy to describe the behavior of each class using tests.
+
+TODO -  Place figure 1 here (A class diagram representing the architecture of the application)
 
 === Open / Closed Principle
 
-text
+This principle states
+
+* Software entities should be open for extension, but closed for modification.
+
+* Be able to add new functionality without changing existing code.
+
+image::images/SOLID-Principles-1a962.png[fig]
 
 === Liskov Substitution Principle
 
