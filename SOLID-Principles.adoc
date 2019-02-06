@@ -40,7 +40,23 @@ This principle states
 
 * Be able to add new functionality without changing existing code.
 
-image::images/SOLID-Principles-1a962.png[fig]
+image::images/open-closed-principle.png[]
+
+In the diagram above, you can see that in the code there is an interface called MortgagePrincipleTask.
+This interface has a single method called calculateMonthlyPayment(...) which represents the contract that is closed for modification.
+This interface has two implementations - FixedRateMortgageCalculatorImpl and InterestOnlyMortgageCalculatorImpl.
+The design is open for extension so if we want to extend the functionality of the app to support adjustable rate mortgages,
+all we have to do is create a third implementation class called AdjustableRateMortgageCalculatorTask.  See the figure below.
+
+image::images/open-closed-principle-2.png[]
+
+Now what about the important point that we should be able to add new functionality without changing existing code.
+This is supported by the Spring framework where we dynamically inject the appropriate implementation class during runtime.
+If you look at the structure of the code, the MortgageProcessorTask is responsible for determining how to process the request
+and instantiating the correct implementation class.  Lets take a closer look at how this class is implemented.
+
+ 
+
 
 === Liskov Substitution Principle
 
