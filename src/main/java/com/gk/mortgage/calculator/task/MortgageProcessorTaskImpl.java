@@ -34,7 +34,9 @@ public class MortgageProcessorTaskImpl implements MortgageProcessorTask, Applica
 		mortgageCalculatorTask = applicationContext.getBean(request.getType(), MortgageCalculatorTask.class);
 		
 		// invoke the bean to calculate the monthly payment
-		double monthlyPayment = mortgageCalculatorTask.calculateMonthlyPayment(request.getPrincipal().doubleValue(), request.getInterestRate().doubleValue(), request.getTerm().intValue());
+		double monthlyPayment = mortgageCalculatorTask.calculateMonthlyPayment(request.getPrincipal().doubleValue(), 
+																			   request.getInterestRate().doubleValue(), 
+																			   request.getTerm().intValue());
 		
 		// return the response object
 		return buildResponseObject(request, monthlyPayment);

@@ -1,6 +1,9 @@
 == Introduction
 
 SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible.
+Robert C. Martin, one of the key authors of the Agile Manifesto is a big proponent of the SOLID design principles.
+The SOLID principles were first conceptualized by Robert C. Martin in his 2000 paper,
+
 These are all critical aspects of good software design especially when doing Test Driven Development (TDD).
 Besides helping write good code, understanding SOLID principles will help you when doing code reviews as it provides a good framework for making
 suggestions to improve the code. In this post, we will discuss the five principles and we will show real code examples to demonstrate its value.
@@ -17,11 +20,11 @@ The five principles are
 . Dependency Injection Principle
 
 We will discuss the SOLID principles and how they were used in the context of the sample mortgage calculator application that was developed.
-The mortgage calculator is an api application that calculates monthly mortgage payments for various type of mortgages such as
+The mortgage calculator is an api application that calculates monthly mortgage payments for various types of mortgages such as
 fixed rate (30 year, 15 year etc) or interest only mortgages.
 
 
-=== S - Simple Principle
+=== Simple Principle
 
 This principle states
 
@@ -30,7 +33,9 @@ This principle states
 If you look at the structure of the code in figure 1, each class only has a single responsibility.
 This makes each class very easy to test.  From a TDD perspective, it makes it very easy to describe the behavior of each class using tests.
 
-TODO -  Place figure 1 here (A class diagram representing the architecture of the application)
+image::images/simple-principle.png[]
+
+
 
 === Open / Closed Principle
 
@@ -42,7 +47,7 @@ This principle states
 
 image::images/open-closed-principle.png[]
 
-In the diagram above, you can see that in the code there is an interface called MortgagePrincipleTask.
+In the diagram above, you can see that in the code there is an interface called MortgageCalculatorTask.
 This interface has a single method called calculateMonthlyPayment(...) which represents the contract that is closed for modification.
 This interface has two implementations - FixedRateMortgageCalculatorImpl and InterestOnlyMortgageCalculatorImpl.
 The design is open for extension so if we want to extend the functionality of the app to support adjustable rate mortgages,
@@ -55,12 +60,22 @@ This is supported by the Spring framework where we dynamically inject the approp
 If you look at the structure of the code, the MortgageProcessorTask is responsible for determining how to process the request
 and instantiating the correct implementation class.  Lets take a closer look at how this class is implemented.
 
- 
+image::images/MortgageProcessorTaskImpl.png[]
+
+Line 34 of this class, uses the Spring application context 'getBean(...)' method to get an instance of a spring managed bean of type MortgageCalculatorTask during runtime.
+The 'getBean(...)' method will either return an instance of 'FixedRateMortgageCalculatorImpl' or 'InterestOnlyMortgageCalculatorImpl'.
+Therefore, if we add the new feature to calculate monthly payments for AdjustableRateMortgages, we do not have to change a single line of code in MortgageProcessorTaskImpl.
+This meets the requirement of 'add functionality without changing existing code'.
+From a TDD perspective, we only need to create unit tests to test and capture the behavior of the new feature, i.e. the AdjustableRateMortgageCalculatorImpl class.
 
 
 === Liskov Substitution Principle
 
-text
+The Liskov substitution principle states
+
+* Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
+
+
 
 === Interface Segregation Principle
 
@@ -71,3 +86,7 @@ text
 == Conclusion
 
 text
+
+== Bibliography
+1. Design Principles and Design Patterns, Robert C. Martin, https://fi.ort.edu.uy/innovaportal/file/2032/1/design_principles.pdf
+2. The Agile Manifesto, https://agilemanifesto.org/principles.html
