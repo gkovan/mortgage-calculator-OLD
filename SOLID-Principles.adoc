@@ -30,7 +30,7 @@ This principle states
 
 * A class should have only a single responsibility.
 
-If you look at the structure of the code in figure 1, each class only has a single responsibility.
+If you look at the structure of the code in figure 1, each class (yellow rectangles) only has a single responsibility.
 This makes each class very easy to test.  From a TDD perspective, it makes it very easy to describe the behavior of each class using tests.
 
 image::images/simple-principle.png[]
@@ -76,21 +76,35 @@ The Liskov substitution principle states
 * Objects in a program should be replaceable with instances of their subtypes without altering the correctness of that program.
 
 This principle is closely related to the Open/Closed principal.
-The principle defines that objects of a superclass shall be replaceable with objects of its subclasses without breaking the application.
+This principle defines that objects of a superclass shall be replaceable with objects of its subclasses without breaking the application.
 That requires the objects of your subclasses to behave in the same way as the objects of your superclass.
-You can achieve that by following a few rules, which are pretty similar to the design by contract concept defined by Bertrand Meyer.
+You can achieve this by following a few rules, which are pretty similar to the design by contract concept defined by Bertrand Meyer.
 
-In our example ‘FixedRateMortgageCalculatorTaskImpl’ and ‘InterestOnlyMortgageCalculatorTaskImpl’ implement the MortgageCalculatorTask so they are a type of MortgageCalculatorTask.
+In our example ‘FixedRateMortgageCalculatorTaskImpl’ and ‘InterestOnlyMortgageCalculatorTaskImpl’ implement the MortgageCalculatorTask interface so they are a type or sub-class of MortgageCalculatorTask.
 
-The code in MortgageProcessorTaskImpl.process(…) invokes the calculate method on whatever bean implementation gets injected into it (i.e. FixedRate or InterestOnly).
-We can easily add new types of MortgageCalculators and the MortgageProcessorTaskImpl class would not have to change at all.
+The code in MortgageProcessorTaskImpl.process(…) invokes the calculate method on whatever bean implementation gets injected into it (i.e. FixedRate or InterestOnly) at runtime.
+We can easily add new types of mortgage calculators and the MortgageProcessorTaskImpl class would not have to change at all.  The application does not break by doing this.
 
+The implication from a unit test perspective is that unit tests need to be written for only the new feature (i.e a new mortgage calculator type) as there is no risk of breaking other parts of the application.
 
 === Interface Segregation Principle
 
 text
 
 === Dependency Injection Principle
+
+The dependency injection principle states
+
+* High-level modules should not depend on low-level modules. Both should depend on abstractions.
+
+* Abstractions should not depend on details. Details should depend on abstractions.
+
+To explain the first statement, lets look at the figure xxx in the 'Simple Principle' section we can see that the MortgageCalculatorController class which is the higher level module,
+and its lower level module, which is the MortgageProcessorTaskImpl do not depend on each other.  They both depend on the abstraction which is the MortgageProcessorTask.
+MortgageCalculatorController is only aware of the interface and is not aware of any concrete implementation classes.
+Similarly, MortgageProcessorTaskImpl depends on the MortgageProcessorTask interface via the implementation relationship. It is not aware of who uses it.
+The significance of this is that
+
 
 == Conclusion
 
