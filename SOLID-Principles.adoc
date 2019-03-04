@@ -1,21 +1,23 @@
+
+= TDD and SOLID: A Match Made In Heaven
+
 == Introduction
 
-SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible.
-Robert C. Martin, one of the key authors of the Agile Manifesto is a big proponent of the SOLID design principles.
-The SOLID principles were first conceptualized by Robert C. Martin in his 2000 paper,
+Many developers that I speak to who are on projects where TDD is practiced, complain that maintaining code (adding new features, fixing bugs, refactoring) becomes difficult because there are too many tests and most of their time is spent fixing tests.
+This can be a symptom of either a poorly designed application where the structure of the code is brittle or poorly designed tests where the tests capture more behavior then is required.
+The ideal state to achieve is one where your tests capture the complete behavior of the application while maintaining the code is quick and easy.
+
+I have found that while developing software using a TDD approach, designing the application using the SOLID design principles results in fewer overall tests that capture the behavior of the application.
+In this paper we will discuss the five SOLID design principles in the context of a sample mortgage calculator application and demonstrate how it enables simpler and fewer tests that are easier to maintain.
 
 TDD is an acronym that stands for Test Driven Development which means that tests are written first followed by the code to make the test pass.
 TDD is one of the main tenets of XP (Extreme Programming), which has gained a lot of traction in the industry.
 
-Many developers that I speak to who are on projects where TDD is practiced, complain that refactoring code becomes difficult because there are too many tests and most of the time is spent fixing the tests.
-The ideal state to achieve is the perfect amount of tests the capture the complete behavior of the application while also making the application easy to maintain and easy to refactor.
-
-I have found that while developing software using a TDD approach, designing the application using the SOLID design principles resulted in fewer tests that enabled faster refactoring and a better designed application.
-In this paper we will discuss the five SOLID design principles in the context of a sample mortgage calculator application and demonstrate how it enables simpler and fewer tests
-that properly capture the behavior of an application.
+SOLID is an acronym for five design principle that make code easier to understand, easier to test, easier to maintain and more flexible.
+Robert C. Martin, one of the key authors of the Agile Manifesto is a big proponent of both TDD and SOLID design principles.
+The SOLID principles were first conceptualized by Robert C. Martin in his 2000 paper,
 
 == SOLID Principles Explained
-
 
 The five principles are
 
@@ -39,6 +41,7 @@ This principle states
 If you look at the structure of the code in figure 1, each class (yellow rectangles) only has a single responsibility.
 This makes each class very easy to test.  From a TDD perspective, it makes it very easy to describe the behavior of each class using tests.
 
+.Code structure of the Mortgage Calculator application demonstrating the Simple principle
 image::images/simple-principle.png[]
 
 .Description of classes and tests for each class
@@ -61,6 +64,7 @@ This principle states
 
 * Be able to add new functionality without changing existing code.
 
+.Code structure of MortgageCalculatorTask and its sub-types demonstrating the open/closed principle
 image::images/open-closed-principle.png[]
 
 In the diagram above, you can see that in the code there is an interface called MortgageCalculatorTask.
@@ -69,6 +73,7 @@ This interface has two implementations - FixedRateMortgageCalculatorImpl and Int
 The design is open for extension so if we want to extend the functionality of the app to support adjustable rate mortgages,
 all we have to do is create a third implementation class called AdjustableRateMortgageCalculatorTask.  See the figure below.
 
+.Extending the app by adding a new sub-type
 image::images/open-closed-principle-2.png[]
 
 Now what about the important point that we should be able to add new functionality without changing existing code.
@@ -76,6 +81,7 @@ This is supported by the Spring framework where we dynamically inject the approp
 If you look at the structure of the code, the MortgageProcessorTask is responsible for determining how to process the request
 and instantiating the correct implementation class.  Lets take a closer look at how this class is implemented.
 
+.Code snippet demonstrating adding new functionality without changing existing code (line 34 in code)
 image::images/MortgageProcessorTaskImpl.png[]
 
 Line 34 of this class, uses the Spring application context 'getBean(...)' method to get an instance of a spring managed bean of type MortgageCalculatorTask during runtime.
@@ -83,7 +89,7 @@ The 'getBean(...)' method will either return an instance of 'FixedRateMortgageCa
 Therefore, if we add the new feature to calculate monthly payments for AdjustableRateMortgages, we do not have to change a single line of code in MortgageProcessorTaskImpl.
 This meets the requirement of 'add functionality without changing existing code'.
 From a TDD perspective, we only need to create unit tests to test and capture the behavior of the new feature, i.e. the AdjustableRateMortgageCalculatorImpl class.
-
+We do not need to add any further tests to test the MortgageProcessorTaskImpl as the behavior of this class is not changed.
 
 === Liskov Substitution Principle
 
@@ -94,7 +100,6 @@ The Liskov substitution principle states
 This principle is closely related to the Open/Closed principal.
 This principle defines that objects of a superclass shall be replaceable with objects of its subclasses without breaking the application.
 That requires the objects of your subclasses to behave in the same way as the objects of your superclass.
-You can achieve this by following a few rules, which are pretty similar to the design by contract concept defined by Bertrand Meyer.
 
 In our example ‘FixedRateMortgageCalculatorTaskImpl’ and ‘InterestOnlyMortgageCalculatorTaskImpl’ implement the MortgageCalculatorTask interface so they are a type or sub-class of MortgageCalculatorTask.
 
@@ -115,13 +120,25 @@ The dependency injection principle states
 
 * Abstractions should not depend on details. Details should depend on abstractions.
 
-To explain the first statement, lets look at the figure xxx in the 'Simple Principle' section we can see that the MortgageCalculatorController class which is the higher level module,
+To explain the first statement, lets look at figure 1 in the 'Simple Principle' section; we can see that the MortgageCalculatorController class which is the higher level module,
 and its lower level module, which is the MortgageProcessorTaskImpl do not depend on each other.  They both depend on the abstraction which is the MortgageProcessorTask.
 MortgageCalculatorController is only aware of the interface and is not aware of any concrete implementation classes.
 Similarly, MortgageProcessorTaskImpl depends on the MortgageProcessorTask interface via the implementation relationship. It is not aware of who uses it.
+Furthermore, you can see from the design of the MortgageCalculatorController class, the dependencies are injected by the constructor.  See figure below.
+The Spring @Autowired annotation is added to the constructor which does the actual injection of the dependent java objects which are Spring beans.
+
+.Dependencies are injected in the constructor using Spring @Autowired annotation (line 21 in the code)
+image::images/MortgageCalculatorController.png[]
+
 The significance of this is that it makes testing easier.  For example, to test the higher level module MortgageCalculatorController, I want to mock all its dependencies.
 From a test perspective, I can simply inject the mock dependent objects in order to ensure that the class under test is behaving as expected.
+Furthermore, in this case, since we are testing the behavior of the controller, the tests only need to cover expected response type, exceptions thrown, http api behavior, etc. that are not covered by other parts of the code.
+There is no need for controller tests to test the behavior of the mortgage calculation formulas or any other part of the system.
 
+If we had instantiated the dependencies directly in the code as shown in the figure below, then we would not be able to mock the dependencies complicating the testing effort.
+
+.Dependencies are instantiated directly in the code execution path (line 20 and 21 in the code) making testing of the controller more difficult
+image::images/MortgageCalculatorController_NoDependencyInjection.png[]
 
 == Conclusion
 
