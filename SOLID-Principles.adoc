@@ -4,9 +4,15 @@ SOLID is an acronym for five design principle that make code easier to understan
 Robert C. Martin, one of the key authors of the Agile Manifesto is a big proponent of the SOLID design principles.
 The SOLID principles were first conceptualized by Robert C. Martin in his 2000 paper,
 
-These are all critical aspects of good software design especially when doing Test Driven Development (TDD).
-Besides helping write good code, understanding SOLID principles will help you when doing code reviews as it provides a good framework for making
-suggestions to improve the code. In this post, we will discuss the five principles and we will show real code examples to demonstrate its value.
+TDD is an acronym that stands for Test Driven Development which means that tests are written first followed by the code to make the test pass.
+TDD is one of the main tenets of XP (Extreme Programming), which has gained a lot of traction in the industry.
+
+Many developers that I speak to who are on projects where TDD is practiced, complain that refactoring code becomes difficult because there are too many tests and most of the time is spent fixing the tests.
+The ideal state to achieve is the perfect amount of tests the capture the complete behavior of the application while also making the application easy to maintain and easy to refactor.
+
+I have found that while developing software using a TDD approach, designing the application using the SOLID design principles resulted in fewer tests that enabled faster refactoring and a better designed application.
+In this paper we will discuss the five SOLID design principles in the context of a sample mortgage calculator application and demonstrate how it enables simpler and fewer tests
+that properly capture the behavior of an application.
 
 == SOLID Principles Explained
 
@@ -35,6 +41,16 @@ This makes each class very easy to test.  From a TDD perspective, it makes it ve
 
 image::images/simple-principle.png[]
 
+.Description of classes and tests for each class
+[options="header,footer"]
+|=======================
+|Class name|Description of class     |Description of Tests
+|MortgageCalculatorController    |Defines the API by specifying the request and response.     |Captures the API behavior for success cases as well as all exceptions. Should not test for correction of mortgage calculations. Tests should capture the http behavior as well as the java behavior.
+|ValidatorInputTaskImpl    |Validates the input to ensure request has proper data.     |Caputres all the various invalid requests and ensure proper exception is thrown.
+|MortgageProcessorTaskImpl    |Processes the request and delegates to the appropriate calculator.    |Tests only capture that the necessary response values exist and not correctness of the response.
+|FixedRateMortgageCalculatorTaskImpl    |Calculates the monthly mortgage payment for fixed rate mortgages.|Tests capture and ensure the correct monthly payment is calculated.
+|InterestOnlyMortgageCalculatorTaskImpl    |Calculates the monthly mortgage payment for interest only mortgages.|Tests capture and ensure the correct monthly payment is calculated.
+|=======================
 
 
 === Open / Closed Principle
@@ -103,7 +119,8 @@ To explain the first statement, lets look at the figure xxx in the 'Simple Princ
 and its lower level module, which is the MortgageProcessorTaskImpl do not depend on each other.  They both depend on the abstraction which is the MortgageProcessorTask.
 MortgageCalculatorController is only aware of the interface and is not aware of any concrete implementation classes.
 Similarly, MortgageProcessorTaskImpl depends on the MortgageProcessorTask interface via the implementation relationship. It is not aware of who uses it.
-The significance of this is that
+The significance of this is that it makes testing easier.  For example, to test the higher level module MortgageCalculatorController, I want to mock all its dependencies.
+From a test perspective, I can simply inject the mock dependent objects in order to ensure that the class under test is behaving as expected.
 
 
 == Conclusion
