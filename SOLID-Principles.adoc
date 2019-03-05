@@ -2,13 +2,15 @@
 = TDD and SOLID: A Match Made In Heaven
 
 == Introduction
+Delivering cloud native apps to users with speed and quality requires a fully automated solution including a comprehensive test suite providing confidence that the application behaves as expected under all known conditions.
+TDD (Test Driven Development) has become a popular method to ensure that the code base is sufficiently tested.
 
-Many developers that I speak to who are on projects where TDD is practiced, complain that maintaining code (adding new features, fixing bugs, refactoring) becomes difficult because there are too many tests and most of their time is spent fixing tests.
-This can be a symptom of either a poorly designed application where the structure of the code is brittle or poorly designed tests where the tests capture more behavior then is required.
-The ideal state to achieve is one where your tests capture the complete behavior of the application while maintaining the code is quick and easy.
+A common complaint I keep hearing from developers who are on projects where TDD is practiced is that maintaining code (adding new features, fixing bugs, refactoring) becomes difficult because there are too many tests and most of their time is consumed fixing tests.
+This can be a symptom of either a poorly designed application where the structure of the code is brittle or poorly designed tests where behaviors are captured at multiple layers of the code base.
+The ideal state to achieve is one where your tests capture the complete behavior of the application without sacrificing the maintainability of the code.
 
-I have found that while developing software using a TDD approach, designing the application using the SOLID design principles results in fewer overall tests that capture the behavior of the application.
-In this paper we will discuss the five SOLID design principles in the context of a sample mortgage calculator application and demonstrate how it enables simpler and fewer tests that are easier to maintain.
+I have found that while developing software using a TDD approach, designing the application using the SOLID design principles results in fewer overall tests that better capture the behavior of the application.
+In this paper we will discuss the five SOLID design principles in the context of a mortgage calculator application and demonstrate how it enables simpler and fewer tests that are easier to maintain.
 
 TDD is an acronym that stands for Test Driven Development which means that tests are written first followed by the code to make the test pass.
 TDD is one of the main tenets of XP (Extreme Programming), which has gained a lot of traction in the industry.
@@ -27,7 +29,7 @@ The five principles are
 . Interface Segregation Principle
 . Dependency Injection Principle
 
-We will discuss the SOLID principles and how they were used in the context of the sample mortgage calculator application that was developed.
+We will discuss the SOLID principles and how they were used in the context designing and building a sample mortgage calculator application.
 The mortgage calculator is an api application that calculates monthly mortgage payments for various types of mortgages such as
 fixed rate (30 year, 15 year etc) or interest only mortgages.
 
@@ -43,6 +45,10 @@ This makes each class very easy to test.  From a TDD perspective, it makes it ve
 
 .Code structure of the Mortgage Calculator application demonstrating the Simple principle
 image::images/simple-principle.png[]
+
+The goal is to create tests that capture the unique behavior each class implements and no more. You want to minimize testing redundant behavior
+across different parts of the application.  For example, the controller tests should not be responsible for testing that the monthly mortgage
+calculations are correct.  Those behaviors are tested and captured by the tests for the two mortgage calculator tasks.
 
 .Description of classes and tests for each class
 [options="header,footer"]
@@ -139,7 +145,7 @@ There is no need for controller tests to test the behavior of the mortgage calcu
 
 If we had instantiated the dependencies directly in the code as shown in the figure below, then we would not be able to mock the dependencies complicating the testing effort.
 
-.Dependencies are instantiated directly in the code execution path (line 20 and 21 in the code) making testing of the controller more difficult
+.Dependencies are instantiated directly in the code (line 20 and 21 in the code) making testing of the controller more difficult
 image::images/MortgageCalculatorController_NoDependencyInjection.png[]
 
 == Conclusion
