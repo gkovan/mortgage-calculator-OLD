@@ -67,11 +67,11 @@ This principle states
 .Code structure of MortgageCalculatorTask and its sub-types demonstrating the open/closed principle
 image::images/open-closed-principle.png[]
 
-In the diagram above, you can see that in the code there is an interface called MortgageCalculatorTask.
-This interface has a single method called calculateMonthlyPayment(...) which represents the contract that is closed for modification.
+The figure above describes the MortgageCalculatorTask interface with a single method called calculateMonthlyPayment(...).
+This interface represents the contract that is closed closed for modification.
 This interface has two implementations - FixedRateMortgageCalculatorImpl and InterestOnlyMortgageCalculatorImpl.
-The design is open for extension so if we want to extend the functionality of the app to support adjustable rate mortgages,
-all we have to do is create a third implementation class called AdjustableRateMortgageCalculatorTask.  See the figure below.
+The design is also open for extension. To extend the functionality of the app to support adjustable rate mortgages,
+we can create a third implementation class called AdjustableRateMortgageCalculatorTask.  See the figure below.
 
 .Extending the app by adding a new sub-type
 image::images/open-closed-principle-2.png[]
@@ -79,17 +79,17 @@ image::images/open-closed-principle-2.png[]
 Now what about the important point that we should be able to add new functionality without changing existing code.
 This is supported by the Spring framework where we dynamically inject the appropriate implementation class during runtime.
 If you look at the structure of the code, the MortgageProcessorTask is responsible for determining how to process the request
-and instantiating the correct implementation class.  Lets take a closer look at how this class is implemented.
+and instantiating the correct implementation class.  See the figure below to see how this class is implemented.
 
 .Code snippet demonstrating adding new functionality without changing existing code (line 34 in code)
 image::images/MortgageProcessorTaskImpl.png[]
 
-Line 34 of this class, uses the Spring application context 'getBean(...)' method to get an instance of a spring managed bean of type MortgageCalculatorTask during runtime.
+Line 34 of this class, uses the Spring application context 'getBean(...)' method to get an instance of a spring managed bean of type MortgageCalculatorTask during runtime execution.
 The 'getBean(...)' method will either return an instance of 'FixedRateMortgageCalculatorImpl' or 'InterestOnlyMortgageCalculatorImpl'.
 Therefore, if we add the new feature to calculate monthly payments for AdjustableRateMortgages, we do not have to change a single line of code in MortgageProcessorTaskImpl.
 This meets the requirement of 'add functionality without changing existing code'.
 From a TDD perspective, we only need to create unit tests to test and capture the behavior of the new feature, i.e. the AdjustableRateMortgageCalculatorImpl class.
-We do not need to add any further tests to test the MortgageProcessorTaskImpl as the behavior of this class is not changed.
+We do not need to add any new tests to test the MortgageProcessorTaskImpl as the behavior of this class is not changed.
 
 === Liskov Substitution Principle
 
@@ -126,14 +126,16 @@ MortgageCalculatorController is only aware of the interface and is not aware of 
 Similarly, MortgageProcessorTaskImpl depends on the MortgageProcessorTask interface via the implementation relationship. It is not aware of who uses it.
 Furthermore, you can see from the design of the MortgageCalculatorController class, the dependencies are injected by the constructor.  See figure below.
 The Spring @Autowired annotation is added to the constructor which does the actual injection of the dependent java objects which are Spring beans.
+The Spring framework instantiates the proper Spring beans (implementation classes) into the constructor.
+This concept is known as inversion of control where the framework instantiates the classes as opposed to the developer having to do so explicitly.
 
 .Dependencies are injected in the constructor using Spring @Autowired annotation (line 21 in the code)
 image::images/MortgageCalculatorController.png[]
 
-The significance of this is that it makes testing easier.  For example, to test the higher level module MortgageCalculatorController, I want to mock all its dependencies.
+The significance of this is that it makes testing easier.  For example, to test the higher level module, MortgageCalculatorController, I want to mock all its dependencies.
 From a test perspective, I can simply inject the mock dependent objects in order to ensure that the class under test is behaving as expected.
 Furthermore, in this case, since we are testing the behavior of the controller, the tests only need to cover expected response type, exceptions thrown, http api behavior, etc. that are not covered by other parts of the code.
-There is no need for controller tests to test the behavior of the mortgage calculation formulas or any other part of the system.
+There is no need for controller tests to test the behavior of the mortgage calculation formulas or any other part of the system.  This would be redundant and would make any future code maintenance more costly as more time would need to be spent fixing broken tests.
 
 If we had instantiated the dependencies directly in the code as shown in the figure below, then we would not be able to mock the dependencies complicating the testing effort.
 
