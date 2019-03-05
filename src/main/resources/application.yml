@@ -1,6 +1,10 @@
 server:
   port: "${port:8110}"
-  
+
+logging:
+  level:
+    com.gk.mortgage.calculator: debug
+      
 environment:
   interestrate:
     uri: "http://localhost:8111/interest-rates"
