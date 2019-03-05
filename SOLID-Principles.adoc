@@ -3,7 +3,7 @@
 
 == Introduction
 Delivering cloud native apps to users with speed and quality requires a fully automated solution including a comprehensive test suite providing confidence that the application behaves as expected under all known conditions.
-TDD (Test Driven Development) has become a popular method to ensure that the code base is sufficiently tested.
+TDD (Test Driven Development) has become a popular method to design and develop software to ensure that the code base is sufficiently tested and its behavior is captured in tests.
 
 A common complaint I keep hearing from developers who are on projects where TDD is practiced is that maintaining code (adding new features, fixing bugs, refactoring) becomes difficult because there are too many tests and most of their time is consumed fixing tests.
 This can be a symptom of either a poorly designed application where the structure of the code is brittle or poorly designed tests where behaviors are captured at multiple layers of the code base.
@@ -116,7 +116,11 @@ The implication from a unit test perspective is that unit tests need to be writt
 
 === Interface Segregation Principle
 
-text
+The interface segregation principle states
+
+* Many client-specific interfaces are better than one general-purpose interface
+
+
 
 === Dependency Injection Principle
 
