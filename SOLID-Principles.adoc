@@ -10,7 +10,7 @@ This can be a symptom of either a poorly designed application where the structur
 The ideal state to achieve is one where your tests capture the complete behavior of the application without sacrificing the maintainability of the code.
 
 I have found that while developing software using a TDD approach, designing the application using the SOLID design principles results in fewer overall tests that better capture the behavior of the application.
-In this paper we will discuss the five SOLID design principles in the context of a mortgage calculator application and demonstrate how it enables simpler and fewer tests that are easier to maintain.
+In this paper we will discuss the five SOLID design principles in the context of a mortgage calculator application and demonstrate how it promotes a well designed application and enables simpler and fewer tests that are easier to maintain.
 
 TDD is an acronym that stands for Test Driven Development which means that tests are written first followed by the code to make the test pass.
 TDD is one of the main tenets of XP (Extreme Programming), which has gained a lot of traction in the industry.
