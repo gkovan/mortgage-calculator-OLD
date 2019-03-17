@@ -9,4 +9,5 @@ public class MortgageCalculatorRequest {
 	Double interestRate;
 	Integer term;
 	String type;
+	String amortization;
 }
