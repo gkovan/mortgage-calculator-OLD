@@ -23,7 +23,7 @@ The SOLID principles were first conceptualized by Robert C. Martin in his 2000 p
 
 The five principles are
 
-. Simple Principle
+. Single Responsibility Principle
 . Open / Closed Principle
 . Liskov Substitution Principle
 . Interface Segregation Principle
@@ -34,7 +34,7 @@ The mortgage calculator is an api application that calculates monthly mortgage p
 fixed rate (30 year, 15 year etc) or interest only mortgages.
 
 
-=== Simple Principle
+=== Single Responsibility Principle
 
 This principle states
 
