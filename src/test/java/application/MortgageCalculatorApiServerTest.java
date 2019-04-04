@@ -37,11 +37,12 @@ public class MortgageCalculatorApiServerTest {
 	public void mortgageCalculatorShouldReturn200() {
 		// given a server with endpoint /calculate
 
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
-		request.setType("fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("fixed").
+				interestRate(5.5).
+				principal(100000.0).
+				term(30).
+				build();
 		
 		
 		// when we invoke /calculate endpoint

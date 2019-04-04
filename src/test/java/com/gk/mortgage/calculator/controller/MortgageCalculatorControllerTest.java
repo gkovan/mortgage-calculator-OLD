@@ -19,6 +19,7 @@ import com.gk.mortgage.calculator.exceptions.BadRequestInputException;
 import com.gk.mortgage.calculator.task.MortgageProcessorTask;
 import com.gk.mortgage.calculator.task.ValidateInputTask;
 
+
 @RunWith(MockitoJUnitRunner.class)
 public class MortgageCalculatorControllerTest {
 	
@@ -43,11 +44,11 @@ public class MortgageCalculatorControllerTest {
 		when(mortgageProcessorTask.process(any())).thenReturn(mockResponse);
 		
 		// given mortgage request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		// set any values for the request fields
-		request.setInterestRate(5.0);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+											interestRate(5.0).
+											principal(100000.0).
+											term(30).
+											build();
 		
 		// when controller is invoked
 		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);
@@ -64,10 +65,11 @@ public class MortgageCalculatorControllerTest {
 		when(mortgageProcessorTask.process(any())).thenThrow(BadRequestInputException.class);
 		
 		// given mortgage request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				interestRate(5.0).
+				term(30).
+				build();
 		// set any values for the request fields
-		request.setInterestRate(5.0);
-		request.setTerm(30);
 		
 		// when controller is invoked
 		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);
@@ -81,11 +83,13 @@ public class MortgageCalculatorControllerTest {
 		when(mortgageProcessorTask.process(any())).thenThrow(RestClientException.class);
 		
 		// given mortgage request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
 		// set any values for the request fields
-		request.setInterestRate(5.0);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				interestRate(5.0).
+				principal(100000.0).
+				term(30).
+				build();
+
 		
 		// when controller is invoked
 		MortgageCalculatorResponse response =  mortgageCalculatorController.calculateMonthlyPayment(request);

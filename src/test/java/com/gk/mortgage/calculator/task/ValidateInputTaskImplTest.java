@@ -12,11 +12,12 @@ public class ValidateInputTaskImplTest {
 	@Test
 	public void testValidInputRequest() {
 		//given
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
-		request.setType("Fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("Fixed").
+				interestRate(5.5).
+				principal(100000.0).
+				term(30).
+				build();
 		
 		//when
 		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
@@ -42,10 +43,11 @@ public class ValidateInputTaskImplTest {
 	@Test(expected = BadRequestInputException.class)
 	public void testRequestNoPrincipalShouldThrowException() {
 		//given
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setTerm(30);
-		request.setType("Fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("Fixed").
+				interestRate(5.5).
+				term(30).
+				build();
 		
 		//when
 		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
@@ -58,10 +60,11 @@ public class ValidateInputTaskImplTest {
 	@Test(expected = BadRequestInputException.class)
 	public void testRequestNoTermShouldThrowException() {
 		//given
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setPrincipal(100000.0);
-		request.setType("Fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("fixed").
+				interestRate(5.5).
+				principal(100000.0).
+				build();
 		
 		//when
 		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();

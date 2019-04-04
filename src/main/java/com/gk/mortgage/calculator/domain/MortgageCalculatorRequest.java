@@ -1,13 +1,15 @@
 package com.gk.mortgage.calculator.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder(toBuilder = true)
 public class MortgageCalculatorRequest {
 	
-	Double principal;
-	Double interestRate;
-	Integer term;
-	String type;
-	String amortization;
+	final Double principal;
+	final Double interestRate;
+	final Integer term;
+	final String type;
+	final String amortization;
 }

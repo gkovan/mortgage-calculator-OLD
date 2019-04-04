@@ -42,11 +42,13 @@ public class MortgageProcessorTaskImplTest {
 	public void whenInvokingMortgageProcessorShouldReturnResponseWithMonthlyPaymentValue() {
 		
 		// given a valid request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
-		request.setType("fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+											type("fixed").
+											interestRate(5.5).
+											principal(100000.0).
+											term(30).
+											build();
+
 
 		// mock the response of the dependency
 		when(mortgageCalculatorTask.calculateMonthlyPayment(100000, 5.5, 30)).thenReturn(100.0);
@@ -63,11 +65,12 @@ public class MortgageProcessorTaskImplTest {
 	public void whenInvokingMortgageProcessor_WithoutInterestRateInRequest_ShouldReturnResponseWithMonthlyPaymentValue() {
 		
 		// given a valid request
-		MortgageCalculatorRequest request = new MortgageCalculatorRequest();
-		request.setInterestRate(5.5);
-		request.setPrincipal(100000.0);
-		request.setTerm(30);
-		request.setType("fixed");
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+											type("fixed").
+											interestRate(5.5).
+											principal(100000.0).
+											term(30).build();
+
 		
 		// mock response from int rate service
 		InterestRatesResponse intRatesResponse = new InterestRatesResponse();

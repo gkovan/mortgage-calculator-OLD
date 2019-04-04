@@ -13,9 +13,9 @@ import com.gk.mortgage.calculator.task.ValidateInputTask;
 @RestController
 public class MortgageCalculatorController {
 	
-	private MortgageProcessorTask mortgageProcessorTask;
+	final private MortgageProcessorTask mortgageProcessorTask;
 	
-	private ValidateInputTask validateInputTask;
+	final private ValidateInputTask validateInputTask;
 
 	
 	@Autowired
