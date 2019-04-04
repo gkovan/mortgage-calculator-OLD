@@ -43,12 +43,7 @@ public class MortgageProcessorTaskImplTest {
 		
 		// given a valid request
 		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
-											type("fixed").
-											interestRate(5.5).
-											principal(100000.0).
-											term(30).
-											build();
-
+											type("fixed").interestRate(5.5).principal(100000.0).term(30).build();
 
 		// mock the response of the dependency
 		when(mortgageCalculatorTask.calculateMonthlyPayment(100000, 5.5, 30)).thenReturn(100.0);

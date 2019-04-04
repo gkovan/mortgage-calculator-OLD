@@ -7,7 +7,6 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 
 import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest;
-import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest.MortgageCalculatorRequestBuilder;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 import com.gk.mortgage.calculator.domain.interest.rate.InterestRatesResponse;
 import com.gk.mortgage.calculator.service.InterestRateService;
@@ -48,8 +47,7 @@ public class MortgageProcessorTaskImpl implements MortgageProcessorTask, Applica
 		// invoke the bean to calculate the monthly payment
 		double monthlyPayment = mortgageCalculatorTask.calculateMonthlyPayment(modifiedRequest.getPrincipal().doubleValue(), 
 																				modifiedRequest.getInterestRate().doubleValue(), 
-																				modifiedRequest.getTerm().intValue());
-		
+																				modifiedRequest.getTerm().intValue());		
 		// return the response object
 		return buildResponseObject(modifiedRequest, monthlyPayment);
 	}
