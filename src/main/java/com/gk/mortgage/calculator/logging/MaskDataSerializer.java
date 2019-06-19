@@ -70,37 +70,7 @@ public class MaskDataSerializer extends JsonSerializer<Object> {
 					e.printStackTrace();
 				}
 			}
-		} else {
-			
-			
-			if (String.class.isAssignableFrom(obj.getClass())) {
-
-
-					MaskingFactory mf = new MaskingFactory();
-					SensitiveDataMask sensitiveData = mf.getInstance(obj.getClass().getAnnotations());
-
-					if (sensitiveData != null) {
-						String maskedValue = sensitiveData.mask((String) obj);
-
-						jgen.writeString(maskedValue);
-					} else {
-						jgen.writeString((String) obj);
-					}
-
-			} else {
-				
-				
-				try {
-					for (Field field : objectClass.getDeclaredFields()) {
-						field.setAccessible(true);
-						jgen.writeObjectField(field.getName(), field.get(obj));
-					}
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				}
-			}
 		}
-		
 		
 		  objectClass = objectClass.getSuperclass();
 		}
