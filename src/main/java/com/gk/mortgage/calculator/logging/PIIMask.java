@@ -1,20 +1,15 @@
 package com.gk.mortgage.calculator.logging;
 
-
-
-
-public class EncryptDataMask implements SensitiveDataMask {
+public class PIIMask implements SensitiveMask {
 
   @Override
   public String mask(String value) {
-    String maskedValue = (MaskingUtil.encrypt(value));
-    return maskedValue;
+    return null;
   }
 
   @Override
   public String mask(String value, int keepLastDigits) {
-    return null;
+    String maskedValue = MaskingUtil.createPIIMask(value, keepLastDigits);
+    return maskedValue;
   }
-
-
 }

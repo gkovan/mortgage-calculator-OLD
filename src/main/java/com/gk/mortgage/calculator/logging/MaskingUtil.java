@@ -1,53 +1,45 @@
 package com.gk.mortgage.calculator.logging;
-import java.security.SecureRandom;
-import java.util.Base64;
-
-import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.IvParameterSpec;
-
 import org.apache.log4j.Logger;
 
 public class MaskingUtil {
 
   private static final Logger log = Logger.getLogger(MaskingUtil.class);
 
+  // For PII
+  public static String createPIIMask(String piiInput, int keeplastDigits) {
+    if (piiInput == null) {
+      return null;
+    }
+
+    String piiString = "";
+    if (piiInput.length() - keeplastDigits >= 0) {
+      String piiInputForMask = piiInput.substring(0, (piiInput.length() - keeplastDigits))+"PII";
+      String piiInputNotForMask = piiInput.substring((piiInput.length() - keeplastDigits));
+      String piiHashResult = Integer.toHexString(piiInputForMask.hashCode());
+      piiString = piiHashResult + piiInputNotForMask;
+    }
+    return piiString;
+  }
+  
   // PCI
-  public static String maskDataButKeepLastFew(String input, int keeplastDigits) {
-    if (input == null) {
+  public static String createPCIMask(String pciInput, int keeplastDigits) {
+    if (pciInput == null) {
       return null;
     }
-    String maskedString = "";
-    if (input.length() - keeplastDigits >= 0) {
-      String inputForMask = input.substring(0, (input.length() - keeplastDigits));
-      String inputNotForMask = input.substring((input.length() - keeplastDigits));
-      inputForMask = inputForMask.replaceAll("(?s).", "*");
-      maskedString = inputForMask + inputNotForMask;
+    String pciString = "";
+    if (pciInput.length() - keeplastDigits >= 0) {
+      String pciInputForMask = pciInput.substring(0, (pciInput.length() - keeplastDigits))+"PCI";
+      String pciInputNotForMask = pciInput.substring((pciInput.length() - keeplastDigits));
+      pciInputForMask = pciInputForMask.replaceAll("(?s).", "*");
+      pciString = pciInputForMask + pciInputNotForMask;
     }
-    return maskedString;
+    return pciString;
   }
 
-  // PII
-  public static String createHash(String input, int keeplastDigits) {
-    if (input == null) {
-      return null;
-    }
-
-    String hashedString = "";
-    if (input.length() - keeplastDigits >= 0) {
-      String inputForHash = input.substring(0, (input.length() - keeplastDigits));
-      String inputNotForMask = input.substring((input.length() - keeplastDigits));
-      String hashedResult = Integer.toHexString(inputForHash.hashCode());
-      hashedString = hashedResult + inputNotForMask;
-    }
-    return hashedString;
-  }
-
-  // Encrypt
+  // Password
   // this is meant to be used for password masking
   // a fixed length mask string is returned so as not to reveal the length 
-  public static String encrypt(String input) {
+  public static String encryptPassword(String input) {
     if (input == null) {
       return null;
     }

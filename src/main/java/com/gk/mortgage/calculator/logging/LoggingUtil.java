@@ -1,10 +1,5 @@
 package com.gk.mortgage.calculator.logging;
 
-import org.springframework.web.context.request.ServletRequestAttributes;
-
-import com.gk.mortgage.calculator.annotations.PCI;
-import com.gk.mortgage.calculator.annotations.PII;
-
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,13 +8,14 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.gk.mortgage.calculator.annotations.PCI;
+import com.gk.mortgage.calculator.annotations.PII;
 
 
 
@@ -88,7 +84,7 @@ public class LoggingUtil {
 			// with String value.
 			if (isPII || isPCI) {
 
-				logText.append(MaskingUtil.maskDataButKeepLastFew((String) args[i], keepLastDigits));
+				logText.append(MaskingUtil.createPCIMask((String) args[i], keepLastDigits));
 
 			} else {
 
@@ -164,7 +160,7 @@ public class LoggingUtil {
 								
 				if (doMask) {
 					
-					value = MaskingUtil.maskDataButKeepLastFew(value, 0);
+					value = MaskingUtil.createPCIMask(value, 0);
 					valuesMasked.add(value);
 				}
 			}

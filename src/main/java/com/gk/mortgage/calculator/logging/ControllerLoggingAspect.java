@@ -12,17 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class ControllerLoggingAspect {
-	@Pointcut("within(@org.springframework.stereotype.Controller *)")
-	public void controller() {
-	}
-
-	@Pointcut("within(@org.springframework.web.bind.annotation.RestController *)")
-	public void restController() {
-	}
-
-	@Pointcut("@annotation(org.springframework.web.bind.annotation.RequestMapping)")
-	public void requestMapping() {
-	}
 		  
 	@Pointcut("execution(* com.gk.mortgage.calculator.controller.*.*(..))")
 	public void loggerAnnotation() {

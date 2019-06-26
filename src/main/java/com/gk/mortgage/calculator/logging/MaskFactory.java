@@ -2,27 +2,24 @@ package com.gk.mortgage.calculator.logging;
 
 import java.lang.annotation.Annotation;
 
-import com.gk.mortgage.calculator.annotations.Encrypt;
+import com.gk.mortgage.calculator.annotations.Password;
 import com.gk.mortgage.calculator.annotations.PCI;
 import com.gk.mortgage.calculator.annotations.PII;
 
+public class MaskFactory {
 
-
-
-public class MaskingFactory {
-
-  public SensitiveDataMask getInstance(Annotation[] annotations) {
+  public SensitiveMask getInstance(Annotation[] annotations) {
 
     for (Annotation an : annotations) {
 
       if (an instanceof PII) {
-        return new PIIDataMask();
+        return new PIIMask();
       } else {
         if (an instanceof PCI) {
-          return new PCIDataMask();
+          return new PCIMask();
         } else {
-          if (an instanceof Encrypt) {
-            return new EncryptDataMask();
+          if (an instanceof Password) {
+            return new EncryptMask();
           }
         }
       }

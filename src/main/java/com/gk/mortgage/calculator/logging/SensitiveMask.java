@@ -1,8 +1,7 @@
 package com.gk.mortgage.calculator.logging;
 
 
-
-public interface SensitiveDataMask {
+public interface SensitiveMask {
 
   String mask(String value);
 

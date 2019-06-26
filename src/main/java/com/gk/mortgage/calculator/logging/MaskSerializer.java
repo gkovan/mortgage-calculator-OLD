@@ -6,17 +6,17 @@ import java.lang.reflect.Field;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.gk.mortgage.calculator.annotations.Encrypt;
+import com.gk.mortgage.calculator.annotations.Password;
 import com.gk.mortgage.calculator.annotations.PCI;
 import com.gk.mortgage.calculator.annotations.PII;
-import com.gk.mortgage.calculator.annotations.Sensitive;
+import com.gk.mortgage.calculator.annotations.Mask;
 
 
-public class MaskDataSerializer extends JsonSerializer<Object> {
+public class MaskSerializer extends JsonSerializer<Object> {
 	private static final long serialVersionUID = 1L;
 	private JsonSerializer<Object> defaultSerializer;
 
-	public MaskDataSerializer(JsonSerializer<Object> serializer) {
+	public MaskSerializer(JsonSerializer<Object> serializer) {
 		defaultSerializer = serializer;
 	}
 
@@ -33,16 +33,16 @@ public class MaskDataSerializer extends JsonSerializer<Object> {
 				break;
 			}
 			
-		if (objectClass.isAnnotationPresent(Sensitive.class)) {
+		if (objectClass.isAnnotationPresent(Mask.class)) {
 
 			for (Field field : objectClass.getDeclaredFields()) {
 				field.setAccessible(true);
 				try {
 					if (field.isAnnotationPresent(PII.class) || field.isAnnotationPresent(PCI.class)
-							|| field.isAnnotationPresent(Encrypt.class)) {
+							|| field.isAnnotationPresent(Password.class)) {
 
-						MaskingFactory mf = new MaskingFactory();
-						SensitiveDataMask sensitiveData = mf.getInstance(field.getAnnotations());
+						MaskFactory mf = new MaskFactory();
+						SensitiveMask sensitiveData = mf.getInstance(field.getAnnotations());
 
 						int keepLastDigits = 0;
 						String maskedValue = null;
@@ -56,7 +56,7 @@ public class MaskDataSerializer extends JsonSerializer<Object> {
 							if (sensitiveData != null) {
 								maskedValue = sensitiveData.mask((String) field.get(obj), keepLastDigits);
 							}
-						} else if (field.isAnnotationPresent(Encrypt.class)) {
+						} else if (field.isAnnotationPresent(Password.class)) {
 							if (sensitiveData != null) {
 								maskedValue = sensitiveData.mask((String) field.get(obj));
 							}

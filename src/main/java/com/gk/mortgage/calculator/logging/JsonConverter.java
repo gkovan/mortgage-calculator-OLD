@@ -8,10 +8,10 @@ import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.BeanSerializerModifier;
-import com.gk.mortgage.calculator.annotations.Encrypt;
+import com.gk.mortgage.calculator.annotations.Password;
 import com.gk.mortgage.calculator.annotations.PCI;
 import com.gk.mortgage.calculator.annotations.PII;
-import com.gk.mortgage.calculator.annotations.Sensitive;
+import com.gk.mortgage.calculator.annotations.Mask;
 
 
 public class JsonConverter {
@@ -35,7 +35,7 @@ public class JsonConverter {
 							JsonSerializer<?> serializer) {
 						
 						if (doesSuperClassAnnotated(desc) || isSecurityAnnotated(desc)) {
-							return new MaskDataSerializer((JsonSerializer<Object>) serializer);
+							return new MaskSerializer((JsonSerializer<Object>) serializer);
 							
 						}else {
 							return serializer;
@@ -49,7 +49,7 @@ public class JsonConverter {
 						while(!objectClass.getName().equalsIgnoreCase("java.lang.Object") 
 								&& !objectClass.isPrimitive()) {
 							
-							if (objectClass.isAnnotationPresent(Sensitive.class)) {
+							if (objectClass.isAnnotationPresent(Mask.class)) {
 								return true;
 							} else {
 								objectClass = objectClass.getSuperclass();
@@ -62,7 +62,7 @@ public class JsonConverter {
 					private boolean isSecurityAnnotated(BeanDescription desc) {
 						return desc.getBeanClass().isAnnotationPresent(PII.class)
 								|| desc.getBeanClass().isAnnotationPresent(PCI.class)
-								|| desc.getBeanClass().isAnnotationPresent(Encrypt.class);
+								|| desc.getBeanClass().isAnnotationPresent(Password.class);
 					}
 				});
 
