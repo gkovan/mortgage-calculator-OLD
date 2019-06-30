@@ -12,8 +12,14 @@ public class MortgageCalculatorRequest {
 	
 	@PII
 	String name;
+	@PII
+	String propertyAddress;
 	@PCI(keepLastDigits=4)
-	String creditCard = "4111111111111111";
+	String creditCard;
+	@PCI
+	String creditCardExpiry;
+	@PII
+	String socialSecurityNumber;
 	Double principal;
 	Double interestRate;
 	Integer term;

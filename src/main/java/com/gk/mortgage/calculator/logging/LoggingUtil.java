@@ -20,8 +20,8 @@ import com.gk.mortgage.calculator.annotations.PII;
 
 
 public class LoggingUtil {
-	public static String LOGGER_BEFORE_PREFIX = "===> MS call request for ";
-	public static String LOGGER_AFTER_PREFIX = "===> MS call response for ";
+	public static String LOGGER_BEFORE_PREFIX = "===> Microservice call request:  ";
+	public static String LOGGER_AFTER_PREFIX = "===> MS call response:  ";
 	
 	
 	public static String logBeforeResponse(JoinPoint joinPoint, boolean logHeader) {
@@ -133,8 +133,8 @@ public class LoggingUtil {
 	public static void getServletRequestHeaderInfo(StringBuilder logText, ServletRequestAttributes servReqAttr) {
 		
 		HttpServletRequest request = servReqAttr.getRequest();
-		logText.append("\n "+ "SessionId=");
-		logText.append(request.getSession().getId());
+//		logText.append("\n "+ "SessionId=");
+//		logText.append(request.getSession().getId());
 		logText.append("\n "+ "ClientId=");
 		logText.append(request.getHeader("Client-id"));
 		logText.append("\n "+ "RequestURI=");

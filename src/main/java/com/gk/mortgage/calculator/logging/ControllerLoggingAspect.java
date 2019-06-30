@@ -23,7 +23,7 @@ public class ControllerLoggingAspect {
 		 
 		Logger logger = Logger.getLogger(joinPoint.getSignature().getDeclaringTypeName());
 		if(logger.isDebugEnabled()) {
-			String logBuilder = LoggingUtil.LOGGER_BEFORE_PREFIX+ "Before Controller - " + getName(joinPoint) + LoggingUtil.logBeforeResponse(joinPoint,true);
+			String logBuilder = LoggingUtil.LOGGER_BEFORE_PREFIX+ "Controller Start- " + getName(joinPoint) + LoggingUtil.logBeforeResponse(joinPoint,true);
 			logger.debug(logBuilder);
 		} 
 	}
@@ -34,7 +34,7 @@ public class ControllerLoggingAspect {
 		Logger logger = Logger.getLogger(joinPoint.getSignature().getDeclaringTypeName());
 		
 		if(logger.isDebugEnabled()) {
-			String logBuilder = LoggingUtil.LOGGER_AFTER_PREFIX + "After Controller - " + getName(joinPoint) + LoggingUtil.logAfterResponse(retVal, true);
+			String logBuilder = LoggingUtil.LOGGER_AFTER_PREFIX + "Controller End- " + getName(joinPoint) + LoggingUtil.logAfterResponse(retVal, true);
 			logger.debug(logBuilder);
 		} 
 	}

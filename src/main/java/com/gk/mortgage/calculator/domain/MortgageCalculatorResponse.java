@@ -9,12 +9,21 @@ import lombok.Data;
 @Data
 @Mask
 public class MortgageCalculatorResponse {
+	
+	@PII
+	String name;
+	@PII
+	String propertyAddress;
+	@PCI(keepLastDigits=4)
+	String creditCard;
+	@PCI
+	String creditCardExpiry;
+	@PII
+	String socialSecurityNumber;
+	
 	Double principal;
 	Double interestRate;
 	Integer term;
 	String type;
-
 	Double monthlyPayment;
-	@PCI
-	String creditCard = "4111111111111111";
 }
