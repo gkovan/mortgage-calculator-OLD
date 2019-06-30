@@ -8,7 +8,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-
 @Component
 @Aspect
 public class ControllerLoggingAspect {
@@ -19,22 +18,26 @@ public class ControllerLoggingAspect {
 	}
 	
 	@Before("loggerAnnotation()")
-	public void beforeLogging(JoinPoint joinPoint) {
+	public void controllerStart(JoinPoint joinPoint) {
 		 
 		Logger logger = Logger.getLogger(joinPoint.getSignature().getDeclaringTypeName());
 		if(logger.isDebugEnabled()) {
-			String logBuilder = LoggingUtil.LOGGER_BEFORE_PREFIX+ "Controller Start- " + getName(joinPoint) + LoggingUtil.logBeforeResponse(joinPoint,true);
+			String logBuilder = LoggingUtil.LOGGER_BEFORE_PREFIX+ "Controller Start- " + 
+					getName(joinPoint) + LoggingUtil.logBeforeResponse(joinPoint,true);
+			
 			logger.debug(logBuilder);
 		} 
 	}
 	
 	@AfterReturning(value = "execution(* com.gk.mortgage.calculator.controller.*.*(..))", returning = "retVal")
-	public void afterReturningLogging(JoinPoint joinPoint, Object retVal) throws Throwable {
+	public void controllerEnd(JoinPoint joinPoint, Object retVal) throws Throwable {
 		
 		Logger logger = Logger.getLogger(joinPoint.getSignature().getDeclaringTypeName());
 		
 		if(logger.isDebugEnabled()) {
-			String logBuilder = LoggingUtil.LOGGER_AFTER_PREFIX + "Controller End- " + getName(joinPoint) + LoggingUtil.logAfterResponse(retVal, true);
+			String logBuilder = LoggingUtil.LOGGER_AFTER_PREFIX + "Controller End- " + 
+					getName(joinPoint) + LoggingUtil.logAfterResponse(retVal, true);
+			
 			logger.debug(logBuilder);
 		} 
 	}
@@ -52,11 +55,9 @@ public class ControllerLoggingAspect {
 				logger.error(logBuilder);
 			//}
 	}
-
 	
 	private String getName(JoinPoint joinPoint) {
 		return joinPoint.getSignature().getDeclaringTypeName() + "."
 				+ joinPoint.getSignature().getName() + " ";
-	}
-	
+	}	
 }
