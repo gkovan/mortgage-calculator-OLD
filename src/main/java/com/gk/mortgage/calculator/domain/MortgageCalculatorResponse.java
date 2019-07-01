@@ -18,7 +18,7 @@ public class MortgageCalculatorResponse {
 	String creditCard;
 	@PCI
 	String creditCardExpiry;
-	@PII
+	@PII(keepLastDigits=4)
 	String socialSecurityNumber;
 	
 	Double principal;
