@@ -33,6 +33,11 @@ public class MortgageProcessorTaskImpl implements MortgageProcessorTask, Applica
 			// Create the modified request object as the original request object is immutable.
 			// The modified request has the interest rate in it.
 			modifiedRequest = MortgageCalculatorRequest.builder().
+					name(request.getName()).
+					propertyAddress(request.getPropertyAddress()).
+					creditCard(request.getCreditCard()).
+					creditCardExpiry(request.getCreditCardExpiry()).
+					socialSecurityNumber(request.getSocialSecurityNumber()).
 					type(request.getType()).
 					principal(request.getPrincipal()).
 					interestRate(request.getInterestRate()).
