@@ -1,87 +1,111 @@
 {
-	"variables": [],
 	"info": {
-		"name": "MortgageCalculator",
 		"_postman_id": "62c63a62-5e64-1dd6-3002-92378df7b887",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"name": "MortgageCalculator",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "hellomortgage",
+			"name": "interest-rates",
 			"request": {
-				"url": "localhost:8080/hellomortgage",
 				"method": "GET",
 				"header": [],
-				"body": {},
-				"description": ""
-			},
-			"response": []
-		},
-		{
-			"name": "GET calculate",
-			"request": {
 				"url": {
-					"raw": "localhost:8080/calculate?principal=100000&interestrate=5.0&term=30",
+					"raw": "localhost:8111/interest-rates",
 					"host": [
 						"localhost"
 					],
-					"port": "8080",
+					"port": "8111",
 					"path": [
-						"calculate"
-					],
-					"query": [
-						{
-							"key": "principal",
-							"value": "100000",
-							"equals": true,
-							"description": ""
-						},
-						{
-							"key": "interestrate",
-							"value": "5.0",
-							"equals": true,
-							"description": ""
-						},
-						{
-							"key": "term",
-							"value": "30",
-							"equals": true,
-							"description": ""
-						}
-					],
-					"variable": []
-				},
-				"method": "GET",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
-					}
-				],
-				"body": {},
-				"description": ""
+						"interest-rates"
+					]
+				}
 			},
 			"response": []
 		},
 		{
-			"name": "POST calculate",
+			"name": "POST calculate fixed rate",
 			"request": {
-				"url": "localhost:8080/calculate",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json",
-						"description": ""
+						"value": "application/json"
+					},
+					{
+						"key": "Client-id",
+						"value": "postman",
+						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"principal\": \"100000\",\n    \"interestRate\": \"5.0\",\n    \"term\": \"30\"\n}"
+					"raw": "{\n\t\"name\" : \"Gerry Kovan\",\n\t\"propertyAddress\": \"99-31 64th Avenue, Rego Park, NY, 11581\",\n\t\"creditCard\": \"4111111111111111\",\n\t\"creditCardExpiry\": \"05/26\",\n\t\"socialSecurityNumber\": \"123-45-6789\",\n    \"principal\": \"100000\",\n    \"interestRate\": \"5.0\",\n    \"term\": \"30\",\n    \"type\": \"fixed\"\n}"
 				},
-				"description": ""
+				"url": {
+					"raw": "localhost:8110/calculate",
+					"host": [
+						"localhost"
+					],
+					"port": "8110",
+					"path": [
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST calculate interest only",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"principal\": \"100000\",\n    \"interestRate\": \"8.0\",\n    \"term\": \"30\",\n    \"type\": \"interest\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8110/calculate",
+					"host": [
+						"localhost"
+					],
+					"port": "8110",
+					"path": [
+						"calculate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST calculate call interest service",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"principal\": \"100000\",\n    \"term\": \"30\",\n    \"type\": \"interest\"\n}"
+				},
+				"url": {
+					"raw": "localhost:8110/calculate",
+					"host": [
+						"localhost"
+					],
+					"port": "8110",
+					"path": [
+						"calculate"
+					]
+				}
 			},
 			"response": []
 		}

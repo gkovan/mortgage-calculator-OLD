@@ -14,6 +14,11 @@ public interface MortgageProcessorTask {
 		response.setPrincipal(request.getPrincipal());
 		response.setTerm(request.getTerm());
 		response.setType(request.getType());
+		response.setName(request.getName());
+		response.setPropertyAddress(request.getPropertyAddress());
+		response.setCreditCard(request.getCreditCard());
+		response.setCreditCardExpiry(request.getCreditCardExpiry());
+		response.setSocialSecurityNumber(request.getSocialSecurityNumber());
 		return response;
 	}
 
