@@ -1,111 +1,87 @@
 {
+	"variables": [],
 	"info": {
-		"_postman_id": "62c63a62-5e64-1dd6-3002-92378df7b887",
 		"name": "MortgageCalculator",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "62c63a62-5e64-1dd6-3002-92378df7b887",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "interest-rates",
+			"name": "hellomortgage",
 			"request": {
+				"url": "localhost:8080/hellomortgage",
 				"method": "GET",
 				"header": [],
-				"url": {
-					"raw": "localhost:8111/interest-rates",
-					"host": [
-						"localhost"
-					],
-					"port": "8111",
-					"path": [
-						"interest-rates"
-					]
-				}
+				"body": {},
+				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "POST calculate fixed rate",
+			"name": "GET calculate",
 			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					},
-					{
-						"key": "Client-id",
-						"value": "postman",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"name\" : \"Gerry Kovan\",\n\t\"propertyAddress\": \"99-31 64th Avenue, Rego Park, NY, 11581\",\n\t\"creditCard\": \"4111111111111111\",\n\t\"creditCardExpiry\": \"05/26\",\n\t\"socialSecurityNumber\": \"123-45-6789\",\n    \"principal\": \"100000\",\n    \"interestRate\": \"5.0\",\n    \"term\": \"30\",\n    \"type\": \"fixed\"\n}"
-				},
 				"url": {
-					"raw": "localhost:8110/calculate",
+					"raw": "localhost:8080/calculate?principal=100000&interestrate=5.0&term=30",
 					"host": [
 						"localhost"
 					],
-					"port": "8110",
+					"port": "8080",
 					"path": [
 						"calculate"
-					]
-				}
+					],
+					"query": [
+						{
+							"key": "principal",
+							"value": "100000",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "interestrate",
+							"value": "5.0",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "term",
+							"value": "30",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
 			},
 			"response": []
 		},
 		{
-			"name": "POST calculate interest only",
+			"name": "POST calculate",
 			"request": {
+				"url": "localhost:8080/calculate",
 				"method": "POST",
 				"header": [
 					{
 						"key": "Content-Type",
-						"value": "application/json"
+						"value": "application/json",
+						"description": ""
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"principal\": \"100000\",\n    \"interestRate\": \"8.0\",\n    \"term\": \"30\",\n    \"type\": \"interest\"\n}"
+					"raw": "{\n    \"principal\": \"100000\",\n    \"interestRate\": \"5.0\",\n    \"term\": \"30\"\n}"
 				},
-				"url": {
-					"raw": "localhost:8110/calculate",
-					"host": [
-						"localhost"
-					],
-					"port": "8110",
-					"path": [
-						"calculate"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "POST calculate call interest service",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"principal\": \"100000\",\n    \"term\": \"30\",\n    \"type\": \"interest\"\n}"
-				},
-				"url": {
-					"raw": "localhost:8110/calculate",
-					"host": [
-						"localhost"
-					],
-					"port": "8110",
-					"path": [
-						"calculate"
-					]
-				}
+				"description": ""
 			},
 			"response": []
 		}
