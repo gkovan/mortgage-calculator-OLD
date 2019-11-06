@@ -24,7 +24,6 @@ import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Ignore
 public class MortgageCalculatorApiServerTest {
 
     @Autowired

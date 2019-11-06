@@ -58,23 +58,26 @@ public class LoggingUtil {
 			boolean isPII = false;
 			boolean isPCI = false;
 			int keepLastDigits = 0;
+			
+			if (annotations != null) {
 
-			for (Annotation annotation : annotations) {
+				for (Annotation annotation : annotations) {
 
-				if (annotation instanceof RequestBody) {
-					loggingDataTypeHeader = "\n "+ "RequestBody=";
-				}
+					if (annotation instanceof RequestBody) {
+						loggingDataTypeHeader = "\n " + "RequestBody=";
+					}
 
-				// PII
-				if (annotation instanceof PII) {
-					keepLastDigits = ((PII) annotation).keepLastDigits();
-					isPII = true;
-				}
+					// PII
+					if (annotation instanceof PII) {
+						keepLastDigits = ((PII) annotation).keepLastDigits();
+						isPII = true;
+					}
 
-				// PCI
-				if (annotation instanceof PCI) {
-					keepLastDigits = ((PCI) annotation).keepLastDigits();
-					isPCI = true;
+					// PCI
+					if (annotation instanceof PCI) {
+						keepLastDigits = ((PCI) annotation).keepLastDigits();
+						isPCI = true;
+					}
 				}
 			}
 
