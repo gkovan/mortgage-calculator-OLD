@@ -10,7 +10,7 @@ public class FixedRateMortgageCalculatorTaskImpl implements MortgageCalculatorTa
 
 	@Override
 	public double calculateMonthlyPayment(double principal, double yearlyRate, int term) {
-		System.out.println("In calculate method of FixedRate");
+		System.out.println("GKGK In calculate method of FixedRate");
 		// Monthly intertest rate
 		double monthlyRate = yearlyRate / 100 / 12;
 
