@@ -10,6 +10,9 @@ import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 import com.gk.mortgage.calculator.task.MortgageProcessorTask;
 import com.gk.mortgage.calculator.task.ValidateInputTask;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class MortgageCalculatorController {
 	
@@ -26,7 +29,8 @@ public class MortgageCalculatorController {
 	
 	@PostMapping("/calculate")
 	public MortgageCalculatorResponse calculateMonthlyPayment(@RequestBody MortgageCalculatorRequest request) {		
-		   validateInputTask.validate(request);
-		   return mortgageProcessorTask.process(request);
+		log.info("Calculating morthly mortgage payment.");   
+		validateInputTask.validate(request);
+		return mortgageProcessorTask.process(request);
 	}
 }

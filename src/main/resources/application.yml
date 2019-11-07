@@ -3,8 +3,17 @@ server:
 
 logging:
   level:
-    com.gk.mortgage.calculator: debug
-      
+    root: INFO
+    com.gk.mortgage.calculator: INFO
+    
+spring: 
+  sleuth:
+     trace-id128: true
+
+management:
+  security:
+    enabled: false
+    
 environment:
   interestrate:
     uri: "http://localhost:8111/interest-rates"
