@@ -29,7 +29,7 @@ public class MortgageCalculatorController {
 	
 	@PostMapping("/calculate")
 	public MortgageCalculatorResponse calculateMonthlyPayment(@RequestBody MortgageCalculatorRequest request) {		
-		log.info("GKGK info");   
+		log.info("Calculating morthly mortgage payment.");   
 		validateInputTask.validate(request);
 		return mortgageProcessorTask.process(request);
 	}
