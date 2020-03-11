@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.gk.mortgage.calculator.domain.Messages;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorResponse;
 import com.gk.mortgage.calculator.task.MortgageProcessorTask;
@@ -18,7 +19,7 @@ public class MortgageCalculatorController_NoDependencyInjection {
 	public MortgageCalculatorResponse calculateMonthlyPayment(@RequestBody MortgageCalculatorRequest request) {		
 		
 		   MortgageProcessorTask mortgageProcessorTask = new MortgageProcessorTaskImpl();
-		   ValidateInputTask validateInputTask = new ValidateInputTaskImpl();	
+		   ValidateInputTask validateInputTask = new ValidateInputTaskImpl(new Messages());	
 		   
 		   validateInputTask.validate(request);
 		   return mortgageProcessorTask.process(request);
