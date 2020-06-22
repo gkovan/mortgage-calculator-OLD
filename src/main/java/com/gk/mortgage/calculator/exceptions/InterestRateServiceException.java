@@ -11,8 +11,8 @@ public class InterestRateServiceException extends RuntimeException {
 	@Getter
 	private String errorCode;
 	
-	public InterestRateServiceException(final String errorCode, final String message) {
-		super(message);
+	public InterestRateServiceException(final String errorCode, final String message, Throwable cause) {
+		super(message, cause);
 		this.errorCode = errorCode;
 	}
 }
