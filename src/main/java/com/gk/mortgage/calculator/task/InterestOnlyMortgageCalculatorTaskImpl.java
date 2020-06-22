@@ -1,10 +1,13 @@
 package com.gk.mortgage.calculator.task;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class InterestOnlyMortgageCalculatorTaskImpl implements MortgageCalculatorTask {
 
 	@Override
 	public double calculateMonthlyPayment(double principal, double yearlyRate, int term) {
-		System.out.println("In calculate method of InterestOnly");
+		log.info("In calculate method of InterestOnly");
 		
 		double monthlyPayment = principal * (yearlyRate/100) / 12;
 		
