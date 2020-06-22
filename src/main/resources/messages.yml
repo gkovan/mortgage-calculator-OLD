@@ -7,5 +7,7 @@ error:
     message: MC0001:Princial amount does not exist.
   MC0002:
     message: MC0002:Term amount does not exist.
+  MC0003:
+    message: MC0003:Error invoking the interest rate service.
   
     
