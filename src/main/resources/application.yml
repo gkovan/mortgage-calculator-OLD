@@ -16,7 +16,7 @@ management:
     
 environment:
   interestrate:
-    uri: "http://localhost:8111/interest-rates"
+    uri: ${INTEREST_RATE_SERVICE_URI:http://localhost:8111/interest-rates}
     username: user1
     password: password1
     
@@ -25,4 +25,4 @@ security:
     enabled: true    
   user:
     name: user1
-    password: password1   
+    password: password1
