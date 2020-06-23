@@ -4,10 +4,14 @@ import com.gk.mortgage.calculator.annotations.PCI;
 import com.gk.mortgage.calculator.annotations.PII;
 import com.gk.mortgage.calculator.annotations.Mask;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Mask
 @Builder(toBuilder = true)
 public class MortgageCalculatorRequest {

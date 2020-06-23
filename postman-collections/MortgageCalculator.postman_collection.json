@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "62c63a62-5e64-1dd6-3002-92378df7b887",
+		"_postman_id": "44af907e-047d-442e-bd0f-106f6a74b0af",
 		"name": "MortgageCalculator",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -85,6 +85,21 @@
 		{
 			"name": "POST calculate call interest service",
 			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password1",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "user1",
+							"type": "string"
+						}
+					]
+				},
 				"method": "POST",
 				"header": [
 					{
@@ -109,5 +124,6 @@
 			},
 			"response": []
 		}
-	]
+	],
+	"protocolProfileBehavior": {}
 }

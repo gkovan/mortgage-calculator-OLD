@@ -44,12 +44,80 @@ public class MortgageCalculatorApiServerTest {
 				build();
 		
 		
-		// when we invoke /calculate endpoint
+		// when we invoke /calculate endpoint with a proper request body and proper basic auth credentials
 		String endpoint = "http://localhost:" + port + "/calculate";
-		ResponseEntity<MortgageCalculatorResponse> re = server.postForEntity(endpoint, request, MortgageCalculatorResponse.class);
+		ResponseEntity<MortgageCalculatorResponse> re = server.withBasicAuth("user1","password1").postForEntity(endpoint, request, MortgageCalculatorResponse.class);
+		
         System.out.println(re.getBody());
         
 		// then
         assertEquals(HttpStatus.OK, re.getStatusCode());
 	}
+	
+	@Test
+	public void mortgageCalculatorShouldReturn401WhenInvalidBasicAuthCredentialsUsed() {
+		// given a server with endpoint /calculate
+
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("fixed").
+				interestRate(5.5).
+				principal(100000.0).
+				term(30).
+				build();
+		
+		
+		// when we invoke /calculate endpoint with a proper request body and incorrect basic auth credentials
+		String endpoint = "http://localhost:" + port + "/calculate";
+		ResponseEntity<MortgageCalculatorResponse> re = server.withBasicAuth("baduser","badpassword").postForEntity(endpoint, request, MortgageCalculatorResponse.class);
+		
+        System.out.println(re.getBody());
+        
+		// then
+        assertEquals(HttpStatus.UNAUTHORIZED, re.getStatusCode());
+	}
+	
+	@Test
+	public void mortgageCalculatorShouldReturn400WhenRequestIsInvalidBecauseMissingPrincipal() {
+		// given a server with endpoint /calculate
+
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("fixed").
+				interestRate(5.5).
+				//principal(100000.0).
+				term(30).
+				build();
+		
+		
+		// when we invoke /calculate endpoint with a non-valid request body and basic auth credentials
+		String endpoint = "http://localhost:" + port + "/calculate";
+		ResponseEntity<MortgageCalculatorResponse> re = server.withBasicAuth("user1","password1").postForEntity(endpoint, request, MortgageCalculatorResponse.class);
+		
+        System.out.println(re.getBody());
+        
+		// then
+        assertEquals(HttpStatus.BAD_REQUEST, re.getStatusCode());
+	}
+	
+	@Test
+	public void mortgageCalculatorShouldReturn500WhenInterestRateServiceIsDown() {
+		// given a server with endpoint /calculate
+
+		MortgageCalculatorRequest request = MortgageCalculatorRequest.builder().
+				type("fixed").
+				//interestRate(5.5).  // we want to invoke the InterestRateService code so request should not have this value
+				principal(100000.0).
+				term(30).
+				build();
+		
+		
+		// when we invoke /calculate endpoint with a proper request body and incorrect basic auth credentials
+		String endpoint = "http://localhost:" + port + "/calculate";
+		ResponseEntity<MortgageCalculatorResponse> re = server.withBasicAuth("baduser","badpassword").postForEntity(endpoint, request, MortgageCalculatorResponse.class);
+		
+        System.out.println(re.getBody());
+        
+		// then
+        assertEquals(HttpStatus.UNAUTHORIZED, re.getStatusCode());
+	}
+
 }

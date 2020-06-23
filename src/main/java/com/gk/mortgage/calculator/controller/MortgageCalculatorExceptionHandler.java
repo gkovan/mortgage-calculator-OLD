@@ -12,28 +12,34 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import com.gk.mortgage.calculator.domain.ErrorResponse;
 import com.gk.mortgage.calculator.exceptions.BadRequestInputException;
+import com.gk.mortgage.calculator.exceptions.InterestRateServiceException;
 import com.gk.mortgage.calculator.logging.MortgageCalculatorErrorCodes;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @ControllerAdvice
 public class MortgageCalculatorExceptionHandler extends ResponseEntityExceptionHandler {
-		
-    // Respond with HTTP 400 Bad request invalid input
-    
-    @ExceptionHandler({ BadRequestInputException.class })
-    protected ResponseEntity<Object> handleBadRequestInputException(RuntimeException e, WebRequest request) {       
-       ErrorResponse error = new ErrorResponse(MortgageCalculatorErrorCodes.APPERR0002.name(), MortgageCalculatorErrorCodes.APPERR0002.value() );
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-       return handleExceptionInternal(e, error, headers, HttpStatus.BAD_REQUEST, request);
-    } 
-    
+
+	// Respond with HTTP 400 Bad request invalid input
+
+	@ExceptionHandler({ BadRequestInputException.class })
+	protected ResponseEntity<Object> handleBadRequestInputException(BadRequestInputException e, WebRequest request) {
+		log.error("Bad Request Input Exception: ", e);
+		ErrorResponse error = new ErrorResponse(e.getErrorCode(), e.getLocalizedMessage());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		return handleExceptionInternal(e, error, headers, HttpStatus.BAD_REQUEST, request);
+	}
+
 	// Respond with HTTP 500 Internal server error
-	
-    @ExceptionHandler({ RestClientException.class })
-    protected ResponseEntity<Object> handleRestClientException(RuntimeException e, WebRequest request) {       
-       ErrorResponse error = new ErrorResponse(MortgageCalculatorErrorCodes.APPERR0001.name(), MortgageCalculatorErrorCodes.APPERR0001.value());
-       HttpHeaders headers = new HttpHeaders();
-       headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-       return handleExceptionInternal(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
-    } 
+
+	@ExceptionHandler({ InterestRateServiceException.class })
+	protected ResponseEntity<Object> handleRestClientException(InterestRateServiceException e, WebRequest request) {
+		log.error("Error invoking interest rate service: ", e);
+		ErrorResponse error = new ErrorResponse(e.getErrorCode(), e.getLocalizedMessage());
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+		return handleExceptionInternal(e, error, headers, HttpStatus.INTERNAL_SERVER_ERROR, request);
+	}
 }
