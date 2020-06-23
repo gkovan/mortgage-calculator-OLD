@@ -6,11 +6,14 @@ import java.util.List;
 import com.gk.mortgage.calculator.domain.MortgageAmortizationSchedule;
 import com.gk.mortgage.calculator.domain.MortgagePayment;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class FixedRateMortgageCalculatorTaskImpl implements MortgageCalculatorTask, MortgageAmortizationScheduleTask {
 
 	@Override
 	public double calculateMonthlyPayment(double principal, double yearlyRate, int term) {
-		System.out.println("In calculate method of FixedRate");
+		log.info("In calculate method of FixedRate");
 		// Monthly intertest rate
 		double monthlyRate = yearlyRate / 100 / 12;
 

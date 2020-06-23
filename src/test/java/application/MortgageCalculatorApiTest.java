@@ -89,13 +89,12 @@ public class MortgageCalculatorApiTest {
         mockMvc.perform(post(url).headers(httpHeaders).content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))                
-                .andExpect(jsonPath("$.code", Matchers.equalTo("APPERR0002")))
-                .andExpect(jsonPath("$.message", Matchers.equalTo("Bad Input Request.")));
+                .andExpect(jsonPath("$.code", Matchers.equalTo("MC0001")))
+                .andExpect(jsonPath("$.message", Matchers.equalTo("MC0001:Princial amount does not exist.")));
     }
     
     
     @Test
-    @Ignore
     public void invokeMortgageCalculatorNoInterestInvokeInterestServiceShouldFailWithHTTP500() throws Exception {
 
         String requestBody = TestUtils.loadSourceFile("__files/mortgage-calculator-fixed-rate-no-interest-invoke-interest-service-request.json");
@@ -105,7 +104,7 @@ public class MortgageCalculatorApiTest {
         mockMvc.perform(post(url).headers(httpHeaders).content(requestBody).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))                
-                .andExpect(jsonPath("$.code", Matchers.equalTo("APPERR0001")))
-                .andExpect(jsonPath("$.message", Matchers.equalTo("Internal Server Error.")));
+                .andExpect(jsonPath("$.code", Matchers.equalTo("MC0003")))
+                .andExpect(jsonPath("$.message", Matchers.equalTo("MC0003:Error invoking the interest rate service.")));
     }    
 }

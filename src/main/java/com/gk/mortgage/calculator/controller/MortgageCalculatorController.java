@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class MortgageCalculatorController {
-	
+		
 	final private MortgageProcessorTask mortgageProcessorTask;
 	
 	final private ValidateInputTask validateInputTask;

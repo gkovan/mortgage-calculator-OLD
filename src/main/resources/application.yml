@@ -17,3 +17,12 @@ management:
 environment:
   interestrate:
     uri: "http://localhost:8111/interest-rates"
+    username: user1
+    password: password1
+    
+security:
+  basic:
+    enabled: true    
+  user:
+    name: user1
+    password: password1   

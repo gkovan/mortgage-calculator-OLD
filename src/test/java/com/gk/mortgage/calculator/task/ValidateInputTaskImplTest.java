@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import com.gk.mortgage.calculator.domain.Messages;
 import com.gk.mortgage.calculator.domain.MortgageCalculatorRequest;
 import com.gk.mortgage.calculator.exceptions.BadRequestInputException;
 
@@ -20,7 +21,7 @@ public class ValidateInputTaskImplTest {
 				build();
 		
 		//when
-		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
+		ValidateInputTask validateInputTask = new ValidateInputTaskImpl(new Messages());
 		validateInputTask.validate(request);
 		
 		// test past if no exception is thrown in validate
@@ -33,7 +34,7 @@ public class ValidateInputTaskImplTest {
 		MortgageCalculatorRequest request = null;
 		
 		//when
-		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
+		ValidateInputTask validateInputTask = new ValidateInputTaskImpl(new Messages());
 		validateInputTask.validate(request);
 		
 		// test past if no exception is thrown in validate
@@ -50,7 +51,7 @@ public class ValidateInputTaskImplTest {
 				build();
 		
 		//when
-		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
+		ValidateInputTask validateInputTask = new ValidateInputTaskImpl(new Messages());
 		validateInputTask.validate(request);
 		
 		// test past if no exception is thrown in validate
@@ -67,7 +68,7 @@ public class ValidateInputTaskImplTest {
 				build();
 		
 		//when
-		ValidateInputTask validateInputTask = new ValidateInputTaskImpl();
+		ValidateInputTask validateInputTask = new ValidateInputTaskImpl(new Messages());
 		validateInputTask.validate(request);
 		
 		// test past if no exception is thrown in validate

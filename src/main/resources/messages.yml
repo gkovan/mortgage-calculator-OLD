@@ -1,0 +1,15 @@
+system: MC
+
+error:
+  MC0000:
+    message: MC0000:Input request object does not exist.
+  MC0001:
+    message: MC0001:Princial amount does not exist.
+  MC0002:
+    message: MC0002:Term amount does not exist.
+  MC0003:
+    message: MC0003:Error invoking the interest rate service.
+  MC0004:
+    message: MC0004:Error invoking the interest rate service. Incorrect username or password.  
+  
+    
