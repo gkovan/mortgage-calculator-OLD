@@ -65,3 +65,9 @@ This project was generated using:
 * generator-ibm-cloud-enablement v^1.0.10
 * generator-ibm-java-spring v2.2.3
 
+
+### Deploy to openshift
+```
+Deploy to OCP using source to image
+oc new-app java~https://github.com/gkovan/mortgage-calculator -n <namespace>
+```
