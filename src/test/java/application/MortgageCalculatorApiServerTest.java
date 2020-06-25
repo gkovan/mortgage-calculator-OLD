@@ -132,7 +132,7 @@ public class MortgageCalculatorApiServerTest {
 		
         System.out.println(re.getBody());
         
-		// then
+		// then HTTP status code should be 500 (INTERNAL_SERVER_ERROR)
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, re.getStatusCode());
 	}
 
